@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ahora">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<meta name="theme-color" content="#0D0F12" id="themeColor">
+<title>Ahora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: dark;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body,body[data-tab="agenda"]{
+  color-scheme:dark;
+  --bg:#0D0F12; --surface:#16191D; --ink:#EEF0F2; --muted:#848B95; --faint:#24282E;
+  --accent:#8EA4FF; --accent-soft:#1B2344; --on-ink:#0D0F12; --on-accent:#0D0F12; --danger:#FF7A6E;
+}
+body[data-tab="cine"]{
+  color-scheme:dark;
+  --bg:#7A1518; --surface:#8C1D21; --ink:#FFF4F1; --muted:#F2BDB6; --faint:#962C30;
+  --accent:#FFD27A; --accent-soft:#9B3324; --on-ink:#7A1518; --on-accent:#3A0A0C; --danger:#FFD27A;
+}
+body[data-tab="gym"]{
+  color-scheme:light;
+  --bg:#FFFFFF; --surface:#F3F4F6; --ink:#121417; --muted:#6B717B; --faint:#E8EAED;
+  --accent:#2F55F4; --accent-soft:#E3E9FF; --on-ink:#FFFFFF; --on-accent:#FFFFFF; --danger:#C7362A;
+}
+*,*::before,*::after{box-sizing:inherit}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.45 Geist,system-ui,-apple-system,"Segoe UI",sans-serif;
+  -webkit-tap-highlight-color:transparent;overflow-x:hidden;overscroll-behavior-y:none;-webkit-text-size-adjust:100%;transition:background-color .5s ease,color .5s ease}
+button,input,textarea,select{font:inherit;color:inherit}
+button{background:none;border:0;padding:0;cursor:pointer;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.sec{max-width:560px;margin:0 auto;padding:28px 0 170px}
+.sec[hidden]{display:none}
+.pad{padding:0 22px}
+
+/* Cabecera común */
+.top{display:flex;justify-content:space-between;align-items:flex-start;padding:0 22px;margin-bottom:24px;gap:12px}
+.date{display:flex;align-items:flex-end;gap:14px;text-align:left}
+.numbox{display:block;overflow:hidden;height:96px}
+.num{display:block;font-size:112px;font-weight:200;line-height:.86;letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.dl{display:flex;flex-direction:column;padding-bottom:6px}
+.dl b{font-weight:500;font-size:18px}
+.dl span{color:var(--muted);font-size:15px}
+.links{display:flex;flex-direction:column;align-items:flex-end;gap:6px;padding-top:8px}
+.links button{color:var(--muted);font-size:14px;display:flex;gap:6px;align-items:center;white-space:nowrap}
+.c{min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--faint);color:var(--ink);font-size:12px;display:inline-flex;align-items:center;justify-content:center}
+.c:empty{display:none}
+.sub{font-size:13px;color:var(--muted);margin:18px 0 2px}
+.sub:first-child{margin-top:0}
+.empty{color:var(--muted);font-size:15px;padding:6px 0 14px}
+.nada{font-size:34px;font-weight:200;color:var(--muted);margin:22px 0 4px;letter-spacing:-.02em}
+.nada + p{color:var(--muted);font-size:14px;margin:0}
+
+/* Filas */
+.item{display:grid;grid-template-columns:54px minmax(0,1fr);gap:12px;align-items:baseline;padding:15px 0;border-bottom:1px solid var(--faint);cursor:pointer}
+.t{font-weight:300;font-size:21px;line-height:1;font-variant-numeric:tabular-nums;color:var(--accent);letter-spacing:-.02em}
+.t.dim{font-size:13px;color:var(--muted);font-weight:400;letter-spacing:0}
+.body{display:flex;flex-direction:column;min-width:0}
+.title{font-size:17px;overflow-wrap:anywhere;width:max-content;max-width:100%;background:linear-gradient(var(--muted),var(--muted)) no-repeat 0 60%/0 1.5px;transition:color .3s}
+.meta{font-size:14px;color:var(--muted);overflow-wrap:anywhere;margin-top:2px}
+.late .meta{color:var(--accent)}
+.chk{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--muted);position:relative;align-self:center;transition:background .25s,border-color .25s;flex:none}
+.done .chk{background:var(--ink);border-color:var(--ink)}
+.done .chk::after{content:"";position:absolute;left:7px;top:3.5px;width:5px;height:10px;border:solid var(--on-ink);border-width:0 2px 2px 0;transform:rotate(45deg)}
+.done .title{background-size:100% 1.5px;color:var(--muted)}
+
+/* Agenda */
+.strip{position:relative;display:grid;grid-template-columns:repeat(7,1fr);margin:0 14px 8px;padding-bottom:12px}
+.strip button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0}
+.strip small{font-size:12px;color:var(--muted)}
+.strip b{font-weight:400;font-size:17px;font-variant-numeric:tabular-nums;color:var(--muted);transition:color .2s}
+.strip .sel b{color:var(--ink);font-weight:500}
+.strip .tdy b{color:var(--accent)}
+.ind{position:absolute;left:0;bottom:4px;width:calc(100%/7);height:5px;display:flex;justify-content:center;pointer-events:none;transition:transform .38s cubic-bezier(.3,.9,.2,1)}
+.ind::after{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.ticks{position:absolute;inset:auto 0 0;height:3px;display:grid;grid-template-columns:repeat(7,1fr);pointer-events:none}
+.ticks i{display:flex;justify-content:center;gap:2px}
+.ticks i span{width:3px;height:3px;border-radius:50%;background:var(--faint)}
+.pager{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;align-items:flex-start;transition:height .25s ease}
+.pager::-webkit-scrollbar{display:none}
+.page{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always;padding:4px 22px 0;min-height:40vh}
+.now{position:relative;height:0;border-top:1.5px solid var(--accent);margin:10px 0 10px 66px}
+.now::before{content:"";position:absolute;left:-4px;top:-5.5px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.now span{position:absolute;left:-66px;top:-10px;font-size:12px;color:var(--accent);font-variant-numeric:tabular-nums}
+.note{padding:15px 0;border-bottom:1px solid var(--faint);cursor:pointer}
+.note .title{font-size:18px;display:block}
+.note .meta{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:pre-line}
+.note small{display:block;font-size:12px;color:var(--muted);margin-top:4px}
+
+/* Cine */
+.search{display:block;width:calc(100% - 44px);margin:0 22px 22px;border:0;border-bottom:1px solid var(--faint);background:none;padding:8px 0 10px;outline:none;font-size:16px}
+.search::placeholder{color:var(--muted)}
+.search:focus{border-bottom-color:var(--accent)}
+.yearsel{appearance:none;-webkit-appearance:none;border:0;background:none;color:var(--muted);font-size:15px;padding:0;cursor:pointer}
+.feature{display:grid;grid-template-columns:minmax(118px,40%) minmax(0,1fr);width:calc(100% - 44px);margin:0 22px 28px;text-align:left;gap:18px;align-items:stretch}
+.f-face,.face{background:var(--tone);color:#FFF4F1;border-radius:10px;overflow:hidden;display:flex;align-items:flex-end;padding:12px;aspect-ratio:3/4}
+.f-face img,.face img{width:calc(100% + 24px);height:calc(100% + 24px);margin:-12px;object-fit:cover;display:block}
+.poster-title{font-size:22px;font-weight:300;line-height:1.02;letter-spacing:-.02em;overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto;min-width:0;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.f-face .poster-title{font-size:28px}
+.f-info{display:flex;flex-direction:column;gap:4px;min-width:0;padding:4px 0}
+.f-kick{color:var(--muted);font-size:14px}
+.f-title{font-size:clamp(28px,7.5vw,40px);font-weight:300;line-height:1;letter-spacing:-.03em;overflow-wrap:anywhere}
+.f-meta{color:var(--muted);font-size:14px}
+.f-nota{margin-top:auto;font-size:56px;font-weight:200;line-height:1;color:var(--accent);letter-spacing:-.04em}
+.f-nota small{font-size:15px;color:var(--muted);letter-spacing:0;margin-left:2px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:22px 14px;padding:0 22px}
+.stub{display:flex;flex-direction:column;gap:8px;text-align:left}
+.s-row{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.s-title{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.s-date{font-size:13px;color:var(--muted)}
+.s-nota{font-size:18px;font-weight:300;color:var(--accent)}
+.facts{margin:0;display:grid;grid-template-columns:auto 1fr;gap:12px 18px}
+.facts dt{color:var(--muted)}
+.facts dd{margin:0;text-align:right}
+.big{margin:0 0 18px;font-size:64px;font-weight:200;line-height:.9;letter-spacing:-.04em;color:var(--accent)}
+.big span{font-size:20px;color:var(--ink);margin-left:8px;letter-spacing:0}
+.months{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;align-items:end;height:110px;margin-top:22px}
+.m{display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end}
+.m i{display:block;width:100%;max-width:18px;background:var(--accent);border-radius:9px;min-height:4px}
+.m i.zero{background:var(--faint)}
+.m span{font-size:11px;color:var(--muted)}
+.rate{display:grid;grid-template-columns:repeat(10,1fr);gap:4px}
+.rate button{border:1px solid var(--faint);border-radius:50%;aspect-ratio:1;font-size:14px}
+.rate button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.photo-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding-top:6px;font-size:14px}
+.photo-row img{width:48px;height:64px;object-fit:cover;border-radius:6px}
+.detail-photo{width:100%;max-height:46dvh;object-fit:cover;border-radius:14px;margin-bottom:16px;display:block}
+.preview{list-style:none;margin:0 0 14px;padding:0;max-height:40dvh;overflow:auto}
+.preview label{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--faint)}
+.preview small{color:var(--muted);margin-left:auto;white-space:nowrap}
+
+/* Gym */
+.trained{display:flex;align-items:center;gap:14px;width:calc(100% - 44px);margin:0 22px 26px;padding:16px 20px;border-radius:999px;background:var(--surface);text-align:left;font-size:17px;transition:background .3s,color .3s}
+.trained .ring{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--muted);position:relative;flex:none;transition:all .3s}
+.trained.on{background:var(--ink);color:var(--on-ink)}
+.trained.on .ring{background:var(--accent);border-color:var(--accent)}
+.trained.on .ring::after{content:"";position:absolute;left:8.5px;top:4px;width:6px;height:12px;border:solid var(--on-accent);border-width:0 2px 2px 0;transform:rotate(45deg)}
+.calhead{display:flex;justify-content:space-between;align-items:baseline;padding:0 22px;margin-bottom:10px}
+.calhead b{font-weight:400;font-size:17px}
+.calhead button{color:var(--muted);font-size:22px;padding:0 8px;line-height:1}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px 0;padding:0 16px;margin-bottom:12px}
+.cal small{text-align:center;font-size:12px;color:var(--muted);padding-bottom:4px}
+.cd{display:flex;justify-content:center}
+.cd button{width:36px;height:36px;border-radius:50%;font-size:14px;font-variant-numeric:tabular-nums;color:var(--ink);transition:background .25s,color .25s}
+.cd button:disabled{color:var(--muted);opacity:.35;cursor:default}
+.cd.on button{background:var(--accent);color:var(--on-accent)}
+.cd.tdy button{box-shadow:inset 0 0 0 1.5px var(--ink)}
+.cd.on.tdy button{box-shadow:none}
+.gstats{padding:0 22px;color:var(--muted);font-size:15px;margin:0 0 30px}
+.gstats b{color:var(--ink);font-weight:500}
+.h{font-size:30px;font-weight:300;letter-spacing:-.02em;margin:0 22px 12px}
+.wrow{display:flex;align-items:baseline;gap:10px;padding:0 22px;margin-bottom:12px}
+.wrow input{width:110px;border:0;border-bottom:1px solid var(--faint);background:none;font-size:34px;font-weight:200;padding:2px 0 6px;outline:none;font-variant-numeric:tabular-nums}
+.wrow input:focus{border-bottom-color:var(--accent)}
+.wrow span{color:var(--muted)}
+.wrow button{margin-left:auto;color:var(--accent);font-size:15px}
+.wnote{padding:0 22px;color:var(--muted);font-size:14px;margin:0 0 10px}
+.chart{padding:0 14px;margin-bottom:30px}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.pt{fill:var(--muted)}
+.avg{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.axis{fill:var(--muted);font-size:10px;font-family:Geist,sans-serif}
+.gl{stroke:var(--faint);stroke-width:1}
+.checks{padding:0 22px}
+.goal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:18px}
+.goal button{aspect-ratio:1;border-radius:50%;border:1px solid var(--faint)}
+.goal button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+
+/* Barra inferior */
+.bottom{position:fixed;left:0;right:0;bottom:0;padding:22px 14px calc(8px + env(safe-area-inset-bottom,0px));background:linear-gradient(to top,var(--bg) 62%,transparent);transition:background .5s}
+.bottom > *{max-width:532px;margin-left:auto;margin-right:auto}
+.composer{display:flex;align-items:center;gap:6px;background:var(--ink);color:var(--on-ink);border-radius:28px;padding:6px 6px 6px 20px}
+.composer input{flex:1;min-width:0;border:0;background:none;color:var(--on-ink);padding:10px 0;outline:none;font-size:16px}
+.composer input::placeholder{color:var(--muted)}
+.send{width:44px;height:44px;border-radius:50%;background:var(--accent);color:var(--on-accent);display:flex;align-items:center;justify-content:center;flex:none}
+.send svg{width:20px;height:20px}
+.send.busy svg{animation:spin 1s linear infinite}
+.cta{display:block;width:100%;background:var(--ink);color:var(--on-ink);border-radius:28px;padding:16px;font-weight:500;text-align:center}
+.tabbar{position:relative;display:grid;grid-template-columns:repeat(3,1fr);margin-top:6px;padding-bottom:8px}
+.tabbar button{padding:12px 0 8px;color:var(--muted);font-size:15px;transition:color .3s}
+.tabbar button[aria-pressed="true"]{color:var(--ink);font-weight:500}
+.tind{position:absolute;bottom:2px;left:0;width:calc(100%/3);display:flex;justify-content:center;transition:transform .45s cubic-bezier(.3,.9,.2,1);pointer-events:none}
+.tind::after{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent)}
+body:not([data-tab="agenda"]) .composer{display:none}
+body:not([data-tab="cine"]) #cineAdd{display:none}
+.toast{position:fixed;left:50%;bottom:calc(150px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);max-width:calc(100% - 28px);width:max-content;background:var(--accent-soft);color:var(--ink);border-radius:20px;padding:9px 16px;font-size:14px;display:flex;gap:14px;align-items:center;z-index:5}
+.toast[hidden]{display:none}
+.toast button{color:var(--accent);font-weight:500}
+
+/* Hojas */
+dialog{border:0;padding:0;background:var(--bg);color:var(--ink);width:min(560px,100%);max-width:100%;max-height:90dvh;margin:auto auto 0;border-radius:22px 22px 0 0}
+dialog::backdrop{background:rgba(8,10,14,.4);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+@media (min-width:700px){dialog{margin:auto;border-radius:22px}}
+.sheet{padding:10px 22px calc(22px + env(safe-area-inset-bottom,0px));overflow:auto;max-height:90dvh}
+.grab{width:36px;height:4px;border-radius:2px;background:var(--faint);margin:0 auto 18px}
+.sheet h2{font-size:30px;font-weight:300;letter-spacing:-.02em;margin:0 0 14px;overflow-wrap:anywhere}
+.shead{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.shead button{color:var(--accent);font-size:15px}
+.kinds{display:flex;gap:22px;margin-bottom:20px;border-bottom:1px solid var(--faint)}
+.kinds button{padding:8px 0 10px;color:var(--muted);position:relative}
+.kinds button[aria-pressed="true"]{color:var(--ink)}
+.kinds button[aria-pressed="true"]::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--accent)}
+.f{display:block;margin-bottom:16px}
+.f > span{display:block;font-size:13px;color:var(--muted)}
+.f input,.f textarea{width:100%;border:0;border-bottom:1px solid var(--faint);background:none;padding:8px 0 10px;border-radius:0;outline:none;font-size:17px}
+.f input:focus,.f textarea:focus{border-bottom-color:var(--accent)}
+.f textarea{min-height:56px;resize:vertical;font-size:16px}
+.kind-nota textarea{min-height:180px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.acts{display:flex;align-items:center;gap:18px;margin-top:10px;flex-wrap:wrap}
+.acts .del{color:var(--muted);margin-right:auto}
+.acts .del.armed{color:var(--danger)}
+.acts .cancel{color:var(--muted)}
+.save{background:var(--ink);color:var(--on-ink);border-radius:22px;padding:11px 22px;font-weight:500}
+.save:disabled{opacity:.6}
+.msg{font-size:14px;color:var(--danger);min-height:1.2em;margin:0 0 6px}
+.d-meta{color:var(--muted);margin:0 0 12px}
+.d-text{margin:0 0 18px;white-space:pre-wrap}
+
+@media (prefers-reduced-motion:no-preference){
+  .roll-up{animation:rollU .38s cubic-bezier(.3,.9,.2,1)}
+  .roll-down{animation:rollD .38s cubic-bezier(.3,.9,.2,1)}
+  @keyframes rollU{from{transform:translateY(60%);opacity:0}}
+  @keyframes rollD{from{transform:translateY(-60%);opacity:0}}
+  .fresh{animation:fresh 1.6s ease-out}
+  @keyframes fresh{0%{background:var(--accent-soft);box-shadow:-22px 0 0 var(--accent-soft),22px 0 0 var(--accent-soft)}100%{background:transparent;box-shadow:-22px 0 0 transparent,22px 0 0 transparent}}
+  .stub.fresh,.feature.fresh{animation:stamp .7s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes stamp{0%{opacity:0;transform:scale(1.1) rotate(2deg)}55%{opacity:1;transform:scale(.97)}100%{transform:none}}
+  .ticked .chk{animation:pop .32s cubic-bezier(.3,.9,.2,1)}
+  .ticked .title{animation:strike .4s ease-out both}
+  @keyframes pop{50%{transform:scale(1.25)}}
+  @keyframes strike{from{background-size:0 1.5px}}
+  dialog[open]{animation:up .34s cubic-bezier(.3,.9,.2,1)}
+  @keyframes up{from{transform:translateY(60px);opacity:0}}
+  .toast:not([hidden]){animation:tin .3s cubic-bezier(.3,.9,.2,1)}
+  @keyframes tin{from{opacity:0;transform:translate(-50%,10px)}}
+  .bump{animation:bump .5s cubic-bezier(.3,.9,.2,1)}
+  @keyframes bump{40%{transform:scale(1.3)}}
+  .enter{animation:enter .5s cubic-bezier(.3,.9,.2,1) both}
+  @keyframes enter{from{opacity:0;transform:translateY(14px)}}
+  .in{animation:enter .5s cubic-bezier(.3,.9,.2,1) both;animation-delay:calc(var(--i,0) * 40ms)}
+  .cd.pulse button{animation:pop .35s cubic-bezier(.3,.9,.2,1)}
+  .trained.pulse .ring{animation:pop .35s cubic-bezier(.3,.9,.2,1)}
+  .m i.grow{transform-origin:bottom;animation:grow .7s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0) * 40ms + 120ms)}
+  @keyframes grow{from{transform:scaleY(0)}}
+  .avg.draw{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.1s cubic-bezier(.3,.9,.2,1) forwards}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  .send:active,.cta:active,.trained:active{transform:scale(.97)}
+  @keyframes spin{to{transform:rotate(360deg)}}
+}
+</style>
+</head>
+<body data-tab="agenda">
+
+<!-- ================= AGENDA ================= -->
+<section class="sec" id="sec-agenda">
+  <header class="top">
+    <button class="date" id="aDateBtn" type="button" aria-label="Ir a hoy">
+      <span class="numbox"><span class="num" id="aNum">–</span></span>
+      <span class="dl"><b id="aWd"></b><span id="aMo"></span></span>
+    </button>
+    <nav class="links">
+      <button type="button" id="openPend">Pendientes <span class="c" id="nPend"></span></button>
+      <button type="button" id="openNotes">Notas <span class="c" id="nNotes"></span></button>
+    </nav>
+  </header>
+  <div class="strip" id="strip"></div>
+  <div class="pager" id="pager"></div>
+</section>
+
+<!-- ================= CINE ================= -->
+<section class="sec" id="sec-cine" hidden>
+  <header class="top">
+    <div class="date">
+      <span class="numbox"><span class="num" id="cNum">0</span></span>
+      <span class="dl"><b id="cWord">películas</b><span><select class="yearsel" id="cYear" aria-label="Año"></select></span></span>
+    </div>
+    <nav class="links">
+      <button type="button" id="cStats">Tu año</button>
+      <button type="button" id="cImport" hidden>Importar notas</button>
+    </nav>
+  </header>
+  <input class="search" id="cQ" type="search" placeholder="Buscar película, cine o persona" aria-label="Buscar">
+  <div id="cMain"></div>
+</section>
+
+<!-- ================= GYM ================= -->
+<section class="sec" id="sec-gym" hidden>
+  <header class="top">
+    <div class="date">
+      <span class="numbox"><span class="num" id="gNum">0</span></span>
+      <span class="dl"><b id="gGoalTxt">de 5 días</b><span>esta semana</span></span>
+    </div>
+    <nav class="links"><button type="button" id="gSettings">Ajustes</button></nav>
+  </header>
+  <button type="button" class="trained" id="gToday"><span class="ring"></span><span id="gTodayTxt">Hoy he entrenado</span></button>
+  <div class="calhead"><button type="button" id="gPrev" aria-label="Mes anterior">‹</button><b id="gMonth"></b><button type="button" id="gNext" aria-label="Mes siguiente">›</button></div>
+  <div class="cal" id="gCal"></div>
+  <p class="gstats" id="gStats"></p>
+  <h3 class="h">Peso</h3>
+  <form class="wrow" id="gWeight" autocomplete="off">
+    <input id="gW" type="number" step="0.1" min="30" max="250" inputmode="decimal" placeholder="—" aria-label="Peso de hoy en kilos"><span>kg hoy</span>
+    <button type="submit">Guardar</button>
+  </form>
+  <p class="wnote" id="gTrend"></p>
+  <div class="chart" id="gChart"></div>
+  <h3 class="h">Hoy</h3>
+  <div class="checks" id="gChecks"></div>
+</section>
+
+<div class="toast" id="toast" role="status" hidden><span id="toastText"></span><button type="button" id="undo">Deshacer</button></div>
+
+<div class="bottom">
+  <form class="composer" id="composer" autocomplete="off">
+    <input id="qtext" placeholder="Cena el viernes a las 21" aria-label="Añadir a la agenda" enterkeyhint="send">
+    <button class="send" id="send" type="submit" aria-label="Añadir">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    </button>
+  </form>
+  <button type="button" class="cta" id="cineAdd">Apuntar película</button>
+  <nav class="tabbar" id="tabbar" aria-label="Apartados">
+    <button type="button" data-tab="agenda" aria-pressed="true">Agenda</button>
+    <button type="button" data-tab="cine" aria-pressed="false">Cine</button>
+    <button type="button" data-tab="gym" aria-pressed="false">Gym</button>
+    <span class="tind" id="tind"></span>
+  </nav>
+</div>
+
+<!-- Hojas de agenda -->
+<dialog id="dlgEdit">
+  <form class="sheet" id="aForm" novalidate>
+    <div class="grab"></div>
+    <h2 id="aFTitle">Nuevo</h2>
+    <div class="kinds" id="kinds" role="group" aria-label="Tipo">
+      <button type="button" data-t="cita">Cita</button>
+      <button type="button" data-t="tarea">Tarea</button>
+      <button type="button" data-t="nota">Nota</button>
+    </div>
+    <label class="f"><span>Qué</span><input name="titulo" autocomplete="off"></label>
+    <div class="two" id="when">
+      <label class="f"><span>Día</span><input name="fecha" type="date"></label>
+      <label class="f"><span>Hora</span><input name="hora" type="time"></label>
+    </div>
+    <label class="f"><span id="notaLabel">Nota</span><textarea name="nota"></textarea></label>
+    <p class="msg" id="aMsg" role="status"></p>
+    <div class="acts">
+      <button type="button" class="del" id="aDel" hidden>Borrar</button>
+      <button type="button" class="cancel" data-close>Cancelar</button>
+      <button type="submit" class="save" id="aSave">Guardar</button>
+    </div>
+  </form>
+</dialog>
+<dialog id="dlgPend"><div class="sheet"><div class="grab"></div><h2>Pendientes</h2><div id="pendList"></div></div></dialog>
+<dialog id="dlgNotes"><div class="sheet"><div class="grab"></div><div class="shead"><h2>Notas</h2><button type="button" id="newNote">Nueva</button></div><div id="noteList"></div></div></dialog>
+
+<!-- Hojas de cine -->
+<dialog id="dlgFilm">
+  <form class="sheet" id="cForm" novalidate>
+    <div class="grab"></div>
+    <h2 id="cFTitle">Nueva película</h2>
+    <label class="f"><span>Película</span><input name="titulo" autocomplete="off"></label>
+    <div class="two">
+      <label class="f"><span>Fecha</span><input name="fecha" type="date"></label>
+      <label class="f"><span>Cine</span><input name="cine" list="cines" autocomplete="off"></label>
+    </div>
+    <label class="f"><span>Con quién</span><input name="con" list="gente" autocomplete="off"></label>
+    <div class="f"><span>Nota</span><div class="rate" id="rate" style="margin-top:8px"></div></div>
+    <label class="f"><span>Qué te pareció</span><textarea name="comentario"></textarea></label>
+    <div class="f" id="photoField" hidden>
+      <span>Foto del cartel o la entrada</span>
+      <div class="photo-row"><img id="photoPrev" alt="" hidden><input type="file" accept="image/*" id="photoInput"><button type="button" id="photoRemove" class="cancel" hidden>Quitar</button></div>
+    </div>
+    <p class="msg" id="cMsg" role="status"></p>
+    <div class="acts">
+      <button type="button" class="cancel" data-close style="margin-left:auto">Cancelar</button>
+      <button type="submit" class="save" id="cSave">Guardar</button>
+    </div>
+  </form>
+</dialog>
+<datalist id="cines"></datalist><datalist id="gente"></datalist>
+<dialog id="dlgDetail"><div class="sheet" id="detail"></div></dialog>
+<dialog id="dlgStats"><div class="sheet" id="statsBox"></div></dialog>
+<dialog id="dlgImport">
+  <div class="sheet">
+    <div class="grab"></div>
+    <h2>Importar desde Notas</h2>
+    <p class="d-meta">Pega la nota del iPhone donde apuntas las pelis. Revisas antes de guardar.</p>
+    <label class="f"><span>Tus notas</span><textarea id="importText" style="min-height:150px"></textarea></label>
+    <ul class="preview" id="preview"></ul>
+    <p class="msg" id="iMsg" role="status"></p>
+    <div class="acts">
+      <button type="button" class="cancel" data-close style="margin-left:auto">Cerrar</button>
+      <button type="button" class="save" id="convertBtn">Convertir</button>
+      <button type="button" class="save" id="importBtn" hidden>Guardar</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- Hoja de gym -->
+<dialog id="dlgGym">
+  <form class="sheet" id="gForm" novalidate>
+    <div class="grab"></div>
+    <h2>Ajustes</h2>
+    <div class="f"><span>Días de entreno por semana</span><div class="goal" id="goal" style="margin-top:10px"></div></div>
+    <label class="f"><span>Lo que marcas cada día, uno por línea</span><textarea id="gList" style="min-height:140px"></textarea></label>
+    <div class="f"><span>Copia de seguridad</span>
+      <p class="d-meta" style="margin:6px 0 10px;font-size:14px">Tus datos viven en este móvil. Guarda una copia de vez en cuando (en Archivos o iCloud).</p>
+      <div style="display:flex;gap:22px"><button type="button" id="bkExport" style="color:var(--accent)">Exportar copia</button><label style="color:var(--accent);cursor:pointer">Importar copia<input type="file" id="bkImport" accept="application/json,.json" hidden></label></div>
+    </div>
+    <div class="acts">
+      <button type="button" class="cancel" data-close style="margin-left:auto">Cancelar</button>
+      <button type="submit" class="save">Guardar</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+(function(){
+/* ================= Utilidades ================= */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const pad = n => String(n).padStart(2,"0");
+const iso = d => d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+const parseD = s => { const [y,m,d] = s.split("-").map(Number); return new Date(y,m-1,d); };
+const addDays = (d,n) => { const x = new Date(d); x.setDate(x.getDate()+n); return x; };
+const monday = d => { const x = new Date(d); x.setHours(0,0,0,0); x.setDate(x.getDate()-((x.getDay()+6)%7)); return x; };
+const DIAS = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+const DIAS3 = ["dom","lun","mar","mié","jue","vie","sáb"];
+const LETRAS = ["L","M","X","J","V","S","D"];
+const MESES = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+const MES3 = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+const cap = s => s.charAt(0).toUpperCase()+s.slice(1);
+const today = () => iso(new Date());
+const short = s => { const d = parseD(s); return DIAS3[d.getDay()]+" "+d.getDate()+" "+MES3[d.getMonth()]; };
+const longD = s => { const d = parseD(s); return d.getDate()+" de "+MESES[d.getMonth()]+" de "+d.getFullYear(); };
+const hm = () => { const n = new Date(); return pad(n.getHours())+":"+pad(n.getMinutes()); };
+const hash = s => { let h = 0; for (const c of String(s)) h = (h*31+c.charCodeAt(0))|0; return Math.abs(h); };
+const blob = id => "/_blob/" + encodeURIComponent(id);
+const REDUCE = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const replay = (el, cls) => { if (!el || REDUCE) return; el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); };
+
+/* ================= Datos ================= */
+const S = { db:null, uid:null, sample:null, assets:null };
+function makeCol(sub, localKey){
+  if (S.db && S.uid) {
+    const c = S.db.collection("data/users/" + S.uid + (sub ? "/" + sub : ""));
+    return { kind:"cuenta",
+      watch(cb){ c.onSnapshot(s => cb(s.docs.map(d => ({ id:d.id, ...d.data() }))), () => {}); },
+      async save(data,id){ if (id) { await c.doc(id).set(data); return id; } const r = await c.add(data); return r.id; },
+      async remove(id){ await c.doc(id).delete(); } };
+  }
+  const cbs = [];
+  const read = () => { try { return JSON.parse(localStorage.getItem(localKey)||"[]"); } catch(e) { return []; } };
+  const write = a => { try { localStorage.setItem(localKey, JSON.stringify(a)); } catch(e) { throw {code:"quota_exceeded"}; } cbs.forEach(f => f(a)); };
+  return { kind:"local",
+    watch(cb){ cbs.push(cb); cb(read()); },
+    async save(data,id){ const a = read(); if (id) { const i = a.findIndex(x=>x.id===id); if (i>-1) a[i] = {...data,id}; else a.push({...data,id}); } else { id = "i"+Date.now()+Math.random().toString(36).slice(2,6); a.push({...data,id}); } write(a); return id; },
+    async remove(id){ write(read().filter(x=>x.id!==id)); } };
+}
+let A, C, G, GC; // colecciones
+
+/* ================= Pestañas ================= */
+const TABS = ["agenda","cine","gym"];
+const THEME = { agenda:"#0D0F12", cine:"#7A1518", gym:"#FFFFFF" };
+let tab = "agenda";
+try { const t = localStorage.getItem("app-tab"); if (TABS.includes(t)) tab = t; } catch(e) {}
+function showTab(t, first){
+  tab = t;
+  document.body.dataset.tab = t;
+  $("#themeColor").setAttribute("content", THEME[t]);
+  TABS.forEach(x => { const s = $("#sec-"+x); s.hidden = x!==t; });
+  document.querySelectorAll("#tabbar button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.tab===t)));
+  $("#tind").style.transform = `translateX(${TABS.indexOf(t)*100}%)`;
+  try { localStorage.setItem("app-tab", t); } catch(e) {}
+  if (!first) replay($("#sec-"+t), "enter");
+  if (t==="agenda") requestAnimationFrame(() => { pager.scrollLeft = ag.range.indexOf(ag.sel) * pager.clientWidth; fit(); });
+  if (t==="cine") { cn.animate = true; renderCine(); }
+  if (t==="gym") { gy.animate = true; renderGym(); }
+  scrollTo(0,0);
+}
+$("#tabbar").addEventListener("click", e => { const b = e.target.closest("[data-tab]"); if (b && b.dataset.tab!==tab) showTab(b.dataset.tab); });
+
+/* ================= Toast ================= */
+let toastT = null, undoFn = null;
+function toast(text, undo){ $("#toastText").textContent = text; undoFn = undo || null; $("#undo").hidden = !undo; $("#toast").hidden = false; clearTimeout(toastT); toastT = setTimeout(() => $("#toast").hidden = true, 5000); }
+$("#undo").addEventListener("click", async () => { $("#toast").hidden = true; if (undoFn) await undoFn(); undoFn = null; });
+
+/* ================= AGENDA ================= */
+const ag = { items:[], ready:false, sel:today(), range:[], fresh:new Set(), ticked:null };
+const pager = $("#pager");
+const sortDay = (a,b) => (a.hora||"99:99").localeCompare(b.hora||"99:99") || (a.tipo==="cita"?0:1)-(b.tipo==="cita"?0:1) || (a.creado||0)-(b.creado||0);
+const onDay = d => ag.items.filter(x => (x.tipo==="cita"||x.tipo==="tarea") && x.fecha===d).sort(sortDay);
+const late = () => ag.items.filter(x => x.tipo==="tarea" && !x.hecho && x.fecha && x.fecha < today()).sort((a,b)=>a.fecha.localeCompare(b.fecha));
+const undated = () => ag.items.filter(x => x.tipo==="tarea" && !x.fecha && (!x.hecho || ag.ticked===x.id || ag.fresh.has(x.id))).sort((a,b)=>(a.creado||0)-(b.creado||0));
+const notes = () => ag.items.filter(x => x.tipo==="nota"||x.tipo==="plan").sort((a,b)=>(b.editado||b.creado||0)-(a.editado||a.creado||0));
+
+function buildRange(center){
+  const start = addDays(monday(parseD(center)), -14);
+  ag.range = Array.from({length:56}, (_,i) => iso(addDays(start,i)));
+  pager.innerHTML = ag.range.map(d => `<section class="page" data-day="${d}"></section>`).join("");
+  renderPages();
+  requestAnimationFrame(() => { pager.scrollLeft = ag.range.indexOf(center) * pager.clientWidth; fit(); });
+}
+function renderPages(){ pager.querySelectorAll(".page").forEach(p => { p.innerHTML = dayHTML(p.dataset.day); }); fit(); }
+function fit(){ const p = pager.querySelector(`[data-day="${ag.sel}"]`); if (p) pager.style.height = Math.max(p.offsetHeight, innerHeight*0.4) + "px"; }
+
+function itemHTML(x, opts={}){
+  const isLate = x.tipo==="tarea" && !x.hecho && x.fecha && x.fecha < today();
+  const meta = [opts.date && x.fecha ? (isLate ? "Era para el "+short(x.fecha) : short(x.fecha)) : "", x.tipo==="tarea" && x.hora ? x.hora : "", x.nota].filter(Boolean).map(esc).join(". ");
+  const lead = x.tipo==="tarea"
+    ? `<button type="button" class="chk" data-check="${esc(x.id)}" aria-label="${x.hecho?"Marcar como pendiente":"Marcar como hecha"}"></button>`
+    : `<span class="t${x.hora?"":" dim"}">${x.hora ? esc(x.hora) : "Todo el día"}</span>`;
+  return `<div class="item ${x.tipo}${x.hecho?" done":""}${isLate?" late":""}${ag.fresh.has(x.id)?" fresh":""}${ag.ticked===x.id?" ticked":""}" data-id="${esc(x.id)}" role="button" tabindex="0">${lead}<div class="body"><span class="title">${esc(x.titulo)}</span>${meta?`<span class="meta">${meta}</span>`:""}</div></div>`;
+}
+function dayHTML(d){
+  if (!ag.ready) return "";
+  const t = today(), items = onDay(d);
+  let html = "";
+  if (d===t) { const l = late(); if (l.length) html += `<p class="sub">De días anteriores</p>${l.map(x=>itemHTML(x,{date:true})).join("")}<p class="sub">Hoy</p>`; }
+  if (!items.length) return html + `<p class="nada">${d===t ? "Nada para hoy." : d < t ? "Nada." : "Día libre."}</p>${d>=t?`<p>Escribe abajo lo que tengas.</p>`:""}`;
+  const rows = items.map(x => itemHTML(x));
+  if (d===t) {
+    const now = hm();
+    let k = items.findIndex(x => x.hora && x.hora > now);
+    if (k===-1) k = items.map(x=>!!x.hora).lastIndexOf(true) + 1;
+    rows.splice(k, 0, `<div class="now"><span>${now}</span></div>`);
+  }
+  return html + rows.join("");
+}
+let lastNum = null;
+function renderAHeader(){
+  const d = parseD(ag.sel), t = today(), el = $("#aNum");
+  if (lastNum !== ag.sel) { el.textContent = d.getDate(); if (lastNum) replay(el, ag.sel > lastNum ? "roll-up" : "roll-down"); lastNum = ag.sel; }
+  const tm = iso(addDays(parseD(t),1)), ay = iso(addDays(parseD(t),-1));
+  $("#aWd").textContent = ag.sel===t ? "Hoy" : ag.sel===tm ? "Mañana" : ag.sel===ay ? "Ayer" : cap(DIAS[d.getDay()]);
+  $("#aMo").textContent = [t,tm,ay].includes(ag.sel) ? cap(DIAS[d.getDay()])+", "+MESES[d.getMonth()] : MESES[d.getMonth()] + (d.getFullYear()!==new Date().getFullYear() ? " "+d.getFullYear() : "");
+  $("#nPend").textContent = (late().length + undated().filter(x=>!x.hecho).length) || "";
+  $("#nNotes").textContent = notes().length || "";
+}
+let stripWeek = null;
+function renderStrip(){
+  const mon = monday(parseD(ag.sel)), wk = iso(mon), t = today();
+  const days = Array.from({length:7}, (_,i) => iso(addDays(mon,i)));
+  if (stripWeek !== wk) {
+    $("#strip").innerHTML = days.map((d,i) => `<button type="button" data-day="${d}" aria-label="${cap(DIAS[parseD(d).getDay()])} ${parseD(d).getDate()}"><small>${LETRAS[i]}</small><b>${parseD(d).getDate()}</b></button>`).join("") + `<div class="ticks" id="ticks"></div><div class="ind" id="ind"></div>`;
+    stripWeek = wk;
+  }
+  $("#strip").querySelectorAll("button").forEach(b => { b.classList.toggle("sel", b.dataset.day===ag.sel); b.classList.toggle("tdy", b.dataset.day===t); b.setAttribute("aria-pressed", String(b.dataset.day===ag.sel)); });
+  $("#ticks").innerHTML = days.map(d => `<i>${"<span></span>".repeat(Math.min(3, onDay(d).filter(x=>!(x.tipo==="tarea"&&x.hecho)).length))}</i>`).join("");
+  $("#ind").style.transform = `translateX(${days.indexOf(ag.sel)*100}%)`;
+}
+function renderAgenda(){ renderAHeader(); renderStrip(); renderPages(); if ($("#dlgPend").open) renderPend(); if ($("#dlgNotes").open) renderNotes(); ag.ticked = null; }
+function goTo(d){
+  const i = ag.range.indexOf(d);
+  ag.sel = d; renderAHeader(); renderStrip();
+  if (i < 3 || i > ag.range.length-4) { buildRange(d); return; }
+  fit(); pager.scrollTo({ left: i * pager.clientWidth, behavior: REDUCE ? "auto" : "smooth" });
+}
+let scrollT = null;
+pager.addEventListener("scroll", () => {
+  clearTimeout(scrollT);
+  const d = ag.range[Math.round(pager.scrollLeft / Math.max(1,pager.clientWidth))];
+  if (d && d !== ag.sel) { ag.sel = d; renderAHeader(); renderStrip(); fit(); }
+  scrollT = setTimeout(() => { const j = ag.range.indexOf(ag.sel); if (j < 3 || j > ag.range.length-4) buildRange(ag.sel); }, 160);
+}, {passive:true});
+addEventListener("resize", () => { if (tab==="agenda") pager.scrollLeft = ag.range.indexOf(ag.sel) * pager.clientWidth; });
+$("#strip").addEventListener("click", e => { const b = e.target.closest("[data-day]"); if (b) goTo(b.dataset.day); });
+$("#aDateBtn").addEventListener("click", () => goTo(today()));
+
+function renderPend(){
+  const l = late(), u = undated();
+  $("#pendList").innerHTML = (l.length ? `<p class="sub">Atrasadas</p>${l.map(x=>itemHTML(x,{date:true})).join("")}` : "")
+    + (u.length ? `<p class="sub">Cuando puedas</p>${u.map(x=>itemHTML(x)).join("")}` : "") || `<p class="empty">Nada pendiente. Las tareas sin día aparecen aquí.</p>`;
+}
+const ago = ts => { if (!ts) return ""; const d = new Date(ts), s = iso(d); return s===today() ? "Hoy, "+pad(d.getHours())+":"+pad(d.getMinutes()) : short(s); };
+function renderNotes(){
+  const n = notes();
+  $("#noteList").innerHTML = n.length ? n.map(x => `<div class="note${ag.fresh.has(x.id)?" fresh":""}" data-id="${esc(x.id)}" role="button" tabindex="0"><span class="title">${esc(x.titulo)}</span>${x.nota?`<span class="meta">${esc(x.nota)}</span>`:""}<small>${ago(x.editado||x.creado)}</small></div>`).join("")
+    : `<p class="empty">Ideas, datos o listas que quieras tener a mano.</p>`;
+}
+$("#openPend").addEventListener("click", () => { renderPend(); $("#dlgPend").showModal(); });
+$("#openNotes").addEventListener("click", () => { renderNotes(); $("#dlgNotes").showModal(); });
+$("#newNote").addEventListener("click", () => openAForm(null, {kind:"nota"}));
+
+const aForm = $("#aForm"); let aEditing = null, kind = "tarea", aDelArmed = false;
+function setKind(k){ kind = k; document.querySelectorAll("#kinds button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.t===k))); $("#when").hidden = k==="nota"; $("#notaLabel").textContent = k==="nota" ? "Texto" : "Nota"; aForm.classList.toggle("kind-nota", k==="nota"); }
+$("#kinds").addEventListener("click", e => { const b = e.target.closest("button"); if (b) setKind(b.dataset.t); });
+function closeAll(){ document.querySelectorAll("dialog[open]").forEach(d => d.close()); }
+function openAForm(x, preset={}){
+  closeAll();
+  aEditing = x ? x.id : null; aForm.reset(); $("#aMsg").textContent = "";
+  $("#aFTitle").textContent = x ? "Editar" : "Nuevo";
+  setKind(preset.kind || (x?.tipo==="plan" ? "nota" : x?.tipo) || "tarea");
+  aForm.titulo.value = preset.titulo ?? x?.titulo ?? "";
+  aForm.fecha.value = x?.fecha ?? ag.sel;
+  aForm.hora.value = x?.hora || ""; aForm.nota.value = x?.nota || "";
+  const del = $("#aDel"); del.hidden = !x; del.textContent = "Borrar"; del.classList.remove("armed"); aDelArmed = false;
+  $("#dlgEdit").showModal();
+  if (!x) setTimeout(() => aForm.titulo.focus(), 80);
+}
+$("#aDel").addEventListener("click", async () => {
+  if (!aDelArmed) { aDelArmed = true; $("#aDel").textContent = "¿Seguro? Toca otra vez"; $("#aDel").classList.add("armed"); return; }
+  try { await A.remove(aEditing); $("#dlgEdit").close(); } catch(e) { $("#aMsg").textContent = "No se ha podido borrar."; }
+});
+aForm.addEventListener("submit", async e => {
+  e.preventDefault();
+  const titulo = aForm.titulo.value.trim();
+  if (!titulo) { $("#aMsg").textContent = "Escribe qué es."; aForm.titulo.focus(); return; }
+  if (kind==="cita" && !aForm.fecha.value) { $("#aMsg").textContent = "Una cita necesita día."; return; }
+  const prev = aEditing ? ag.items.find(x=>x.id===aEditing) : null;
+  const data = { tipo:kind, titulo, fecha: kind==="nota" ? "" : aForm.fecha.value, hora: kind==="nota" ? "" : aForm.hora.value,
+    nota: aForm.nota.value.trim(), hecho: kind==="tarea" ? !!prev?.hecho : false, hechoEn: prev?.hechoEn || null, creado: prev?.creado || Date.now(), editado: Date.now() };
+  $("#aSave").disabled = true;
+  try { const id = await A.save(data, aEditing); $("#dlgEdit").close(); land([id], [data]); }
+  catch(err) { $("#aMsg").textContent = "No se ha podido guardar. Inténtalo de nuevo."; }
+  finally { $("#aSave").disabled = false; }
+});
+function land(ids, items){
+  ids.forEach(id => ag.fresh.add(id)); setTimeout(() => ids.forEach(id => ag.fresh.delete(id)), 1800);
+  const f = items[0];
+  if (f.fecha) goTo(f.fecha);
+  renderAgenda();
+  const target = f.tipo==="nota" ? "#nNotes" : !f.fecha ? "#nPend" : null;
+  if (target) replay($(target), "bump");
+}
+/* Intérprete local: entiende "mañana", "el viernes", "a las 9", "21:30", "nota: ..." */
+const WD = {lunes:1,martes:2,"miércoles":3,miercoles:3,jueves:4,viernes:5,"sábado":6,sabado:6,domingo:0};
+const MESN = {enero:0,febrero:1,marzo:2,abril:3,mayo:4,junio:5,julio:6,agosto:7,septiembre:8,setiembre:8,octubre:9,noviembre:10,diciembre:11};
+const VERBOS = /^(comprar|llamar|enviar|mandar|pagar|hacer|reservar|pedir|recoger|llevar|escribir|revisar|devolver|sacar|limpiar|preparar|terminar|acabar|renovar|imprimir|lavar|arreglar|contestar|responder|buscar|mirar|apuntar|leer|estudiar|entregar|subir|ir a por)\b/i;
+function parseLocal(text){
+  let s = " " + text.trim() + " ";
+  if (/^\s*nota\b[:\s]*/i.test(s)) {
+    const body = s.replace(/^\s*nota\b[:\s]*/i, "").trim();
+    const m = body.match(/^(.+?)(?:[:\n]|,\s|\.\s)([\s\S]*)$/);
+    const titulo = m ? m[1] : body, resto = m ? m[2] : "";
+    return { tipo:"nota", titulo:cap(titulo.trim()), nota:resto.trim(), fecha:"", hora:"" };
+  }
+  const base = new Date(); base.setHours(0,0,0,0);
+  let fecha = "", hora = "";
+  const cut = re => { const m = s.match(re); if (m) s = s.replace(re, " "); return m; };
+  let m;
+  let hh = null, mm = 0;
+    if ((m = cut(/\s(?:a\s+las?|sobre\s+las?|las)\s+(\d{1,2})(?:[:.h](\d{2}))?(\s+y\s+media|\s+y\s+cuarto|\s+menos\s+cuarto)?(\s+de\s+la\s+(?:mañana|tarde|noche)|\s*(?:am|pm))?/i))
+      || (m = cut(/\s(\d{1,2})[:.](\d{2})()(\s+de\s+la\s+(?:mañana|tarde|noche)|\s*(?:am|pm))?/i))
+      || (m = cut(/\s(\d{1,2})h()()(\s+de\s+la\s+(?:mañana|tarde|noche))?(?=\s|$)/i))) {
+    hh = +m[1]; mm = m[2] ? +m[2] : 0;
+    const extra = (m[3]||"").trim(), q = (m[4]||"").toLowerCase();
+    if (extra==="y media") mm = 30; else if (extra==="y cuarto") mm = 15; else if (extra==="menos cuarto") { hh -= 1; mm = 45; }
+    if (/tarde|noche|pm/.test(q) && hh < 12) hh += 12;
+    else if (!/mañana|am/.test(q) && hh >= 1 && hh <= 7) hh += 12;
+    if (hh > 23 || mm > 59) hh = null;
+  }
+  if (hh !== null) hora = pad(hh)+":"+pad(mm);
+  if (cut(/\s(para\s)?pasado\s+mañana\b/i)) fecha = iso(addDays(base,2));
+  else if (cut(/\s(para\s)?mañana(?!\s+por)(?=\s|$|,)(?!\s*de\s+la)/i) && !fecha) fecha = iso(addDays(base,1));
+  if (!fecha && cut(/\s(para\s)?hoy\b/i)) fecha = iso(base);
+  if (!fecha && (m = cut(/\s(?:para\s)?(?:la\s)?semana\s+que\s+viene\b|\s(?:la\s)?próxima\s+semana\b/i))) fecha = iso(addDays(monday(base),7));
+  if (!fecha && (m = cut(/\s(?:el\s|este\s|próximo\s|proximo\s)?(lunes|martes|miércoles|miercoles|jueves|viernes|sábado|sabado|domingo)\b(\s+que\s+viene)?/i))) {
+    const target = WD[m[1].toLowerCase()]; let diff = (target - base.getDay() + 7) % 7; if (m[2]) diff = diff || 7; fecha = iso(addDays(base, diff));
+  }
+  if (!fecha && (m = cut(/\s(?:el\s)?(\d{1,2})\s+de\s+(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|setiembre|octubre|noviembre|diciembre)\b/i))) {
+    let d = new Date(base.getFullYear(), MESN[m[2].toLowerCase()], +m[1]); if (d < base) d.setFullYear(d.getFullYear()+1); fecha = iso(d);
+  }
+  if (!fecha && (m = cut(/\s(?:el\s)?(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?\b/))) {
+    let y = m[3] ? (+m[3] < 100 ? 2000 + +m[3] : +m[3]) : base.getFullYear();
+    let d = new Date(y, +m[2]-1, +m[1]); if (!m[3] && d < base) d.setFullYear(y+1); fecha = iso(d);
+  }
+  if (!fecha && (m = cut(/\s(?:el\s)?día\s(\d{1,2})\b|\sel\s(\d{1,2})(?=\s|$)(?!\s*[:.h]\d)/i))) {
+    const n = +(m[1]||m[2]); let d = new Date(base.getFullYear(), base.getMonth(), n); if (d < base) d = new Date(base.getFullYear(), base.getMonth()+1, n); fecha = iso(d);
+  }
+  if (hora && !fecha) fecha = hora > hm() ? today() : iso(addDays(base,1));
+  let titulo = s.replace(/\s+/g," ").replace(/\s+(el|a|para|de|y|en)\s*$/i,"").replace(/^\s*(el|a|para)\s+/i,"").replace(/\s+,/g,",").replace(/[,\s]+$/,"").trim();
+  if (!titulo) titulo = text.trim();
+  titulo = cap(titulo);
+  const tipo = VERBOS.test(titulo) ? "tarea" : (hora || fecha) ? "cita" : "tarea";
+  return { tipo, titulo:titulo.slice(0,140), fecha, hora: tipo==="tarea" && !hora ? "" : hora, nota:"" };
+}
+$("#composer").addEventListener("submit", async e => {
+  e.preventDefault();
+  const text = $("#qtext").value.trim();
+  if (!text) { openAForm(null, {}); return; }
+  const it = parseLocal(text);
+  try {
+    const id = await A.save({...it, hecho:false, hechoEn:null, creado:Date.now(), editado:Date.now()}, null);
+    $("#qtext").value = ""; $("#qtext").blur();
+    land([id], [it]);
+    const where = it.tipo==="nota" ? "en Notas" : it.fecha ? short(it.fecha) + (it.hora ? ", " + it.hora : "") : "en Pendientes";
+    toast(`${it.titulo}, ${where}`, async () => { try { await A.remove(id); } catch(e) {} });
+  } catch(err) { toast("No se ha podido guardar"); }
+});
+async function onAgendaClick(e){
+  const chk = e.target.closest("[data-check]");
+  if (chk) {
+    const x = ag.items.find(y=>y.id===chk.dataset.check); if (!x) return;
+    const hecho = !x.hecho; ag.ticked = hecho ? x.id : null;
+    const { id, ...rest } = x;
+    try { await A.save({...rest, hecho, hechoEn: hecho ? Date.now() : null}, id); } catch(err) { toast("No se ha podido guardar"); }
+    return;
+  }
+  const r = e.target.closest("[data-id]");
+  if (r) { const x = ag.items.find(y=>y.id===r.dataset.id); if (x) openAForm(x); }
+}
+[pager, $("#pendList"), $("#noteList")].forEach(el => el.addEventListener("click", onAgendaClick));
+
+/* ================= CINE ================= */
+const cn = { films:[], ready:false, year:new Date().getFullYear(), q:"", animate:true, fresh:null };
+const TONES = ["#2B0709","#3A0B0E","#4A1013","#260A12","#3B1219","#1E0608"];
+const yearOf = f => f ? +f.slice(0,4) : null;
+const cFmt = f => { if (!f) return "Sin fecha"; const [y,m,d] = f.split("-"); return (+d)+" "+MES3[+m-1]; };
+const filmsOfYear = () => cn.films.filter(f => yearOf(f.fecha)===cn.year || (!f.fecha && cn.year===new Date().getFullYear()));
+const sortFilms = a => [...a].sort((x,y) => (y.fecha||"").localeCompare(x.fecha||"") || (y.creado||0)-(x.creado||0));
+let cLastCount = null;
+function renderCine(){
+  const years = new Set([new Date().getFullYear(), cn.year]);
+  cn.films.forEach(f => { const y = yearOf(f.fecha); if (y) years.add(y); });
+  $("#cYear").innerHTML = [...years].sort((a,b)=>b-a).map(y => `<option value="${y}" ${y===cn.year?"selected":""}>en ${y}</option>`).join("");
+  const uniq = k => [...new Set(cn.films.map(f=>f[k]).filter(Boolean))];
+  $("#cines").innerHTML = uniq("cine").map(c=>`<option value="${esc(c)}">`).join("");
+  $("#gente").innerHTML = uniq("con").map(c=>`<option value="${esc(c)}">`).join("");
+  const list = filmsOfYear();
+  const numEl = $("#cNum");
+  if (cLastCount !== list.length || cn.animate) { if (cn.animate && cn.ready) countUp(numEl, list.length); else numEl.textContent = list.length; cLastCount = list.length; }
+  $("#cWord").textContent = list.length===1 ? "película" : "películas";
+  if (tab !== "cine") return;
+  const anim = cn.animate && !REDUCE && cn.ready; cn.animate = false;
+  const main = $("#cMain");
+  if (!cn.ready) { main.innerHTML = ""; return; }
+  const q = cn.q.trim().toLowerCase();
+  const shown = sortFilms(list).filter(f => !q || [f.titulo,f.cine,f.con].some(v => (v||"").toLowerCase().includes(q)));
+  if (!list.length) { main.innerHTML = `<div class="pad"><p class="nada">Ninguna todavía.</p><p>Apunta la próxima al salir de la sala${S.sample?", o importa las que tienes en Notas":""}.</p></div>`; return; }
+  if (!shown.length) { main.innerHTML = `<div class="pad"><p class="empty">Nada coincide con esa búsqueda.</p></div>`; return; }
+  let html = "", rest = shown;
+  if (!q) { html += featureHTML(shown[0], anim); rest = shown.slice(1); }
+  if (rest.length) html += `<div class="grid">${rest.map((f,i) => stubHTML(f,i,anim)).join("")}</div>`;
+  main.innerHTML = html;
+  if (anim) main.querySelectorAll("[data-to]").forEach(el => countUp(el, +el.dataset.to));
+}
+const fotoSrc = f => f.foto || (f.fotoId ? blob(f.fotoId) : "");
+function face(f){ const src = fotoSrc(f); return src ? `<img src="${src}" alt="" loading="lazy">` : `<span class="poster-title">${esc(f.titulo)}</span>`; }
+function featureHTML(f, anim){
+  const meta = [longD(f.fecha||today()), f.cine].filter(Boolean).map(esc).join(", ");
+  return `<button type="button" class="feature${anim?" in":""}${cn.fresh===f.id?" fresh":""}" data-film="${esc(f.id)}" style="--tone:${TONES[hash(f.titulo)%TONES.length]}" aria-label="${esc(f.titulo)}">
+    <span class="f-face">${face(f)}</span>
+    <span class="f-info"><span class="f-kick">Lo último que viste</span><span class="f-title">${esc(f.titulo)}</span><span class="f-meta">${f.fecha?meta:esc(f.cine||"")}</span>
+    ${f.nota?`<span class="f-nota"><span data-to="${f.nota}">${f.nota}</span><small>/10</small></span>`:""}</span></button>`;
+}
+function stubHTML(f, i, anim){
+  return `<button type="button" class="stub${anim?" in":""}${cn.fresh===f.id?" fresh":""}" data-film="${esc(f.id)}" style="--tone:${TONES[hash(f.titulo)%TONES.length]};--i:${Math.min(i+1,14)}" aria-label="${esc(f.titulo)}">
+    <span class="face">${face(f)}</span>
+    <span class="s-row"><span class="s-title">${esc(f.titulo)}</span>${f.nota?`<span class="s-nota">${f.nota}</span>`:""}</span>
+    <span class="s-date">${cFmt(f.fecha)}${f.cine?", "+esc(f.cine):""}</span></button>`;
+}
+function countUp(el, to, dec=0){
+  if (REDUCE) { el.textContent = to.toFixed(dec).replace(".",","); return; }
+  const t0 = performance.now(), d = 900;
+  const step = t => { const p = Math.min(1,(t-t0)/d), e = 1-Math.pow(1-p,3); el.textContent = (to*e).toFixed(dec).replace(".",","); if (p<1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}
+function mode(arr){ const c = {}; arr.filter(Boolean).forEach(v => c[v]=(c[v]||0)+1); return Object.entries(c).sort((a,b)=>b[1]-a[1])[0] || null; }
+function openStats(){
+  const list = filmsOfYear(), rated = list.filter(f=>f.nota);
+  const avg = rated.length ? rated.reduce((s,f)=>s+f.nota,0)/rated.length : null;
+  const best = rated.length ? sortFilms(rated).sort((a,b)=>b.nota-a.nota)[0] : null;
+  const cine = mode(list.map(f=>f.cine)), con = mode(list.map(f=>f.con));
+  const per = Array(12).fill(0); list.forEach(f => { if (f.fecha) per[+f.fecha.slice(5,7)-1]++; });
+  const max = Math.max(...per);
+  const row = (k,v) => `<dt>${k}</dt><dd>${v}</dd>`;
+  $("#statsBox").innerHTML = `<div class="grab"></div><h2>Tu ${cn.year} en el cine</h2>
+    <p class="big"><span data-to="${list.length}" style="font-size:inherit;color:inherit;margin:0">${list.length}</span><span>${list.length===1?"película":"películas"}</span></p>
+    <dl class="facts">${avg!==null?row("Nota media", `<span data-to="${avg.toFixed(1)}" data-dec="1">${avg.toFixed(1).replace(".",",")}</span>`):""}
+    ${best?row("La mejor", `${esc(best.titulo)} (${best.nota})`):""}${cine?row("Cine habitual", `${esc(cine[0])} (${cine[1]})`):""}
+    ${con?row("Con quien más vas", `${esc(con[0])} (${con[1]})`):""}${max?row("Mes más cinéfilo", `${MESES[per.indexOf(max)]} (${max})`):""}</dl>
+    <div class="months">${per.map((n,i)=>`<div class="m"><i class="${n?"":"zero"} grow" style="--i:${i};height:${max?Math.max(4,n/max*80):4}px"></i><span>${MESES[i][0].toUpperCase()}</span></div>`).join("")}</div>`;
+  $("#dlgStats").showModal();
+  $("#statsBox").querySelectorAll("[data-to]").forEach(el => countUp(el, +el.dataset.to, +(el.dataset.dec||0)));
+}
+$("#cStats").addEventListener("click", openStats);
+$("#cYear").addEventListener("change", e => { cn.year = +e.target.value; cn.animate = true; renderCine(); });
+$("#cQ").addEventListener("input", e => { cn.q = e.target.value; renderCine(); });
+
+const cForm = $("#cForm"); let cEditing = null, nota = null, keepFoto = null;
+$("#rate").innerHTML = Array.from({length:10},(_,i)=>`<button type="button" data-n="${i+1}" aria-pressed="false">${i+1}</button>`).join("");
+function setNota(n){ nota = n; document.querySelectorAll("#rate button").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.n===n))); }
+$("#rate").addEventListener("click", e => { const b = e.target.closest("button"); if (b) { setNota(nota===+b.dataset.n ? null : +b.dataset.n); replay(b,"bump"); } });
+function showPhoto(src){ const im = $("#photoPrev"); im.hidden = !src; if (src) im.src = src; $("#photoRemove").hidden = !src; }
+$("#photoInput").addEventListener("change", e => { const f = e.target.files[0]; if (f) showPhoto(URL.createObjectURL(f)); });
+$("#photoRemove").addEventListener("click", () => { keepFoto = null; $("#photoInput").value = ""; showPhoto(null); });
+function openFilm(f){
+  closeAll();
+  cEditing = f ? f.id : null; keepFoto = f ? (fotoSrc(f) || null) : null;
+  cForm.reset(); $("#cMsg").textContent = ""; $("#cFTitle").textContent = f ? "Editar película" : "Nueva película";
+  cForm.titulo.value = f?.titulo || ""; cForm.fecha.value = f?.fecha || today();
+  cForm.cine.value = f?.cine || ""; cForm.con.value = f?.con || ""; cForm.comentario.value = f?.comentario || "";
+  setNota(f?.nota || null); showPhoto(keepFoto);
+  $("#photoField").hidden = false;
+  $("#dlgFilm").showModal(); if (!f) setTimeout(() => cForm.titulo.focus(), 80);
+}
+async function toDataURL(file){
+  const bmp = await createImageBitmap(file); const s = Math.min(1, 520/Math.max(bmp.width,bmp.height));
+  const c = document.createElement("canvas"); c.width = Math.round(bmp.width*s); c.height = Math.round(bmp.height*s);
+  c.getContext("2d").drawImage(bmp,0,0,c.width,c.height);
+  return c.toDataURL("image/jpeg", .72);
+}
+cForm.addEventListener("submit", async e => {
+  e.preventDefault();
+  const titulo = cForm.titulo.value.trim();
+  if (!titulo) { $("#cMsg").textContent = "Escribe el título de la película."; cForm.titulo.focus(); return; }
+  const btn = $("#cSave"); btn.disabled = true;
+  try {
+    let foto = keepFoto; const file = $("#photoInput").files[0];
+    if (file) { btn.textContent = "Preparando foto…"; try { foto = await toDataURL(file); } catch(e) { foto = keepFoto; } }
+    const prev = cEditing ? cn.films.find(f=>f.id===cEditing) : null;
+    const data = { titulo, fecha:cForm.fecha.value||"", cine:cForm.cine.value.trim(), con:cForm.con.value.trim(), nota:nota||null,
+      comentario:cForm.comentario.value.trim(), foto:foto||null, creado:prev?.creado || Date.now() };
+    const id = await C.save(data, cEditing);
+    const y = yearOf(data.fecha); if (y) cn.year = y;
+    cn.fresh = id; setTimeout(() => { cn.fresh = null; }, 1500);
+    $("#dlgFilm").close(); cn.q = ""; $("#cQ").value = ""; renderCine();
+  } catch(err) { $("#cMsg").textContent = err?.code==="quota_exceeded" ? "No queda espacio en el móvil para más fotos. Guarda sin foto o borra alguna." : "No se ha podido guardar. Inténtalo de nuevo."; }
+  finally { btn.disabled = false; btn.textContent = "Guardar"; }
+});
+function openDetail(id){
+  const f = cn.films.find(x=>x.id===id); if (!f) return;
+  const meta = [f.fecha ? longD(f.fecha) : "", f.cine, f.con].filter(Boolean).map(esc).join(", ");
+  $("#detail").innerHTML = `<div class="grab"></div>${fotoSrc(f)?`<img class="detail-photo" src="${fotoSrc(f)}" alt="">`:""}
+    <h2>${esc(f.titulo)}</h2><p class="d-meta">${meta}</p>
+    ${f.nota?`<p class="f-nota" style="margin:0 0 14px">${f.nota}<small>/10</small></p>`:""}
+    ${f.comentario?`<p class="d-text">${esc(f.comentario)}</p>`:""}
+    <div class="acts"><button type="button" class="del" id="cDel">Borrar</button><button type="button" class="cancel" data-close>Cerrar</button><button type="button" class="save" id="cEdit">Editar</button></div>`;
+  let armed = false;
+  $("#cDel").onclick = async () => {
+    if (!armed) { armed = true; $("#cDel").textContent = "¿Seguro? Toca otra vez"; $("#cDel").classList.add("armed"); return; }
+    try { await C.remove(f.id); $("#dlgDetail").close(); } catch(e) { $("#cDel").textContent = "No se ha podido borrar"; }
+  };
+  $("#cEdit").onclick = () => openFilm(f);
+  $("#dlgDetail").showModal();
+}
+$("#cMain").addEventListener("click", e => { const b = e.target.closest("[data-film]"); if (b) openDetail(b.dataset.film); });
+$("#cineAdd").addEventListener("click", () => openFilm(null));
+
+let parsed = [];
+function resetImport(){ parsed = []; $("#importText").value = ""; $("#preview").innerHTML = ""; $("#iMsg").textContent = ""; $("#convertBtn").hidden = false; $("#importBtn").hidden = true; }
+$("#cImport").addEventListener("click", () => { resetImport(); $("#dlgImport").showModal(); });
+$("#convertBtn").addEventListener("click", async () => {
+  const txt = $("#importText").value.trim();
+  if (!txt) { $("#iMsg").textContent = "Pega primero el texto de tu nota."; return; }
+  const btn = $("#convertBtn"); btn.disabled = true; btn.textContent = "Convirtiendo…"; $("#iMsg").textContent = "";
+  const y = new Date().getFullYear();
+  try {
+    const out = await S.sample.json(`Recibirás el texto de una nota del iPhone donde una persona apunta las películas que ha visto en el cine.
+Extrae cada película y responde SOLO con un array JSON de objetos con las claves "titulo" (string), "fecha" (YYYY-MM-DD o "" si no aparece; si solo hay día y mes usa el año ${y}), "cine" (string o ""), "con" (con quién fue, string o ""), "nota" (entero de 1 a 10 o null; si usa otra escala, conviértela), "comentario" (frase breve tal como la escribió, o ""). No inventes datos.
+
+Texto de la nota:
+${txt}`);
+    parsed = (Array.isArray(out)?out:[]).filter(o=>o && o.titulo).map(o => ({ titulo:String(o.titulo).trim(), fecha:/^\d{4}-\d{2}-\d{2}$/.test(o.fecha||"")?o.fecha:"",
+      cine:String(o.cine||"").trim(), con:String(o.con||"").trim(), nota:Number.isInteger(o.nota)&&o.nota>=1&&o.nota<=10?o.nota:null, comentario:String(o.comentario||"").trim() }));
+    if (!parsed.length) { $("#iMsg").textContent = "No he encontrado películas en ese texto."; return; }
+    $("#preview").innerHTML = parsed.map((p,i)=>`<li><label><input type="checkbox" checked data-i="${i}"><span>${esc(p.titulo)}</span><small>${p.fecha?cFmt(p.fecha)+" "+p.fecha.slice(0,4):"Sin fecha"}</small></label></li>`).join("");
+    btn.hidden = true; $("#importBtn").hidden = false; $("#importBtn").textContent = `Guardar ${parsed.length}`;
+  } catch(e) {
+    $("#iMsg").textContent = e?.code==="not_granted" ? "Hace falta permitir que la página consulte a Claude." : e?.code==="rate_limited" ? "Demasiadas peticiones seguidas. Espera un momento." : "No se ha podido convertir. Prueba con menos texto.";
+  } finally { btn.disabled = false; if (!btn.hidden) btn.textContent = "Convertir"; }
+});
+$("#preview").addEventListener("change", () => { const n = document.querySelectorAll("#preview input:checked").length; $("#importBtn").textContent = `Guardar ${n}`; $("#importBtn").disabled = !n; });
+$("#importBtn").addEventListener("click", async () => {
+  const btn = $("#importBtn"); btn.disabled = true;
+  const chosen = [...document.querySelectorAll("#preview input:checked")].map(i => parsed[+i.dataset.i]);
+  let ok = 0;
+  for (const p of chosen) { try { await C.save({...p, fotoId:null, creado:Date.now()+ok}, null); ok++; btn.textContent = `Guardando ${ok}/${chosen.length}`; } catch(e) { break; } }
+  $("#iMsg").textContent = ok===chosen.length ? `Guardadas ${ok} películas.` : `Guardadas ${ok} de ${chosen.length}. Vuelve a intentarlo con el resto.`;
+  btn.disabled = false;
+  if (ok===chosen.length) setTimeout(() => { $("#dlgImport").close(); cn.animate = true; renderCine(); }, 900);
+});
+
+/* ================= GYM ================= */
+const DEF_LIST = ["Creatina","Proteína","Omega-3","Vitamina D3+K2","Magnesio"];
+const gy = { days:{}, cfg:{ objetivo:5, lista:DEF_LIST }, ready:false, month:new Date(new Date().getFullYear(), new Date().getMonth(), 1), animate:true, pulse:null };
+const dayDoc = d => gy.days[d] || { entreno:false, peso:null, checks:[] };
+async function saveDay(d, patch){
+  const cur = dayDoc(d); const data = { entreno:!!cur.entreno, peso:cur.peso ?? null, checks:cur.checks || [], ...patch };
+  gy.days[d] = data; renderGym();
+  try { await G.save(data, d); } catch(e) { toast("No se ha podido guardar"); }
+}
+const trainedIn = (from, to) => Object.entries(gy.days).filter(([d,v]) => v.entreno && d>=from && d<=to).length;
+function weekStreak(){
+  const goal = gy.cfg.objetivo; let n = 0, mon = monday(new Date());
+  if (trainedIn(iso(mon), iso(addDays(mon,6))) >= goal) n++;
+  for (let i=1;i<200;i++) { const m = addDays(mon,-7*i); if (trainedIn(iso(m), iso(addDays(m,6))) >= goal) n++; else break; }
+  return n;
+}
+let gLastNum = null;
+function renderGym(){
+  const t = today(), mon = monday(new Date());
+  const week = trainedIn(iso(mon), iso(addDays(mon,6)));
+  const numEl = $("#gNum");
+  if (gLastNum !== week) { if (gLastNum!==null && !gy.animate) replay(numEl, week > gLastNum ? "roll-up" : "roll-down"); numEl.textContent = week; gLastNum = week; }
+  $("#gGoalTxt").textContent = `de ${gy.cfg.objetivo} días`;
+  const on = !!dayDoc(t).entreno;
+  $("#gToday").classList.toggle("on", on);
+  $("#gTodayTxt").textContent = on ? "Entrenado hoy" : "Hoy he entrenado";
+  if (tab !== "gym") return;
+  const anim = gy.animate && !REDUCE && gy.ready; gy.animate = false;
+  // calendario
+  const m = gy.month, y = m.getFullYear(), mo = m.getMonth();
+  $("#gMonth").textContent = cap(MESES[mo]) + (y!==new Date().getFullYear() ? " "+y : "");
+  const first = (new Date(y,mo,1).getDay()+6)%7, nDays = new Date(y,mo+1,0).getDate();
+  let cal = LETRAS.map(l => `<small>${l}</small>`).join("") + "<span></span>".repeat(first);
+  for (let d=1; d<=nDays; d++) {
+    const ds = iso(new Date(y,mo,d)), v = dayDoc(ds);
+    cal += `<div class="cd${v.entreno?" on":""}${ds===t?" tdy":""}${gy.pulse===ds?" pulse":""}${anim?" in":""}" style="--i:${Math.min(d,20)}"><button type="button" data-gday="${ds}" ${ds>t?"disabled":""} aria-pressed="${!!v.entreno}" aria-label="${d} de ${MESES[mo]}">${d}</button></div>`;
+  }
+  $("#gCal").innerHTML = cal; gy.pulse = null;
+  $("#gNext").style.visibility = (y===new Date().getFullYear() && mo===new Date().getMonth()) ? "hidden" : "visible";
+  const monthCount = trainedIn(iso(new Date(y,mo,1)), iso(new Date(y,mo,nDays)));
+  const st = weekStreak();
+  $("#gStats").innerHTML = `<b>${monthCount}</b> ${monthCount===1?"día":"días"} en ${MESES[mo]}. ` + (st ? `<b>${st}</b> ${st===1?"semana":"semanas seguidas"} cumpliendo tu objetivo.` : `Cumple ${gy.cfg.objetivo} días esta semana para empezar racha.`);
+  // peso
+  const w = dayDoc(t).peso; if (document.activeElement !== $("#gW")) $("#gW").value = w ?? "";
+  renderChart(anim);
+  // checklist
+  const done = dayDoc(t).checks || [];
+  $("#gChecks").innerHTML = gy.cfg.lista.length ? gy.cfg.lista.map(n => `<div class="item tarea${done.includes(n)?" done":""}${gy.ticked===n?" ticked":""}" data-gcheck="${esc(n)}" role="button" tabindex="0"><span class="chk" aria-hidden="true"></span><div class="body"><span class="title">${esc(n)}</span></div></div>`).join("")
+    : `<p class="empty">Añade en Ajustes lo que quieras marcar cada día.</p>`;
+  gy.ticked = null;
+}
+function renderChart(anim){
+  const t = today(), from = iso(addDays(parseD(t), -89));
+  const pts = Object.entries(gy.days).filter(([d,v]) => v.peso && d>=from && d<=t).map(([d,v]) => ({d, w:+v.peso})).sort((a,b)=>a.d.localeCompare(b.d));
+  if (pts.length < 2) { $("#gChart").innerHTML = ""; $("#gTrend").textContent = pts.length ? "Apunta tu peso unos días más para ver la tendencia." : "Pésate cuando quieras; con unos días verás la tendencia, no el dato suelto."; return; }
+  const day = s => Math.round((parseD(s) - parseD(pts[0].d))/864e5);
+  const span = Math.max(7, day(t));
+  const avgAt = i => { const di = day(pts[i].d); const win = pts.filter(p => day(p.d) <= di && day(p.d) > di-7); return win.reduce((s,p)=>s+p.w,0)/win.length; };
+  const avgs = pts.map((_,i) => avgAt(i));
+  const all = pts.map(p=>p.w).concat(avgs), lo = Math.floor(Math.min(...all)-0.5), hi = Math.ceil(Math.max(...all)+0.5);
+  const W = 320, H = 130, X = d => 8 + day(d)/span*(W-40), Y = v => 10 + (hi-v)/(hi-lo)*(H-30);
+  const path = pts.map((p,i) => (i?"L":"M")+X(p.d).toFixed(1)+" "+Y(avgs[i]).toFixed(1)).join(" ");
+  const grid = [hi, (hi+lo)/2, lo].map(v => `<line class="gl" x1="8" x2="${W-32}" y1="${Y(v)}" y2="${Y(v)}"/><text class="axis" x="${W-28}" y="${Y(v)+3}">${String(Math.round(v*10)/10).replace(".",",")}</text>`).join("");
+  $("#gChart").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Evolución del peso en los últimos 90 días">${grid}
+    ${pts.map(p => `<circle class="pt" cx="${X(p.d).toFixed(1)}" cy="${Y(p.w).toFixed(1)}" r="2"/>`).join("")}
+    <path class="avg${anim?" draw":""}" d="${path}" pathLength="1"/>
+    <text class="axis" x="8" y="${H-4}">${cFmt(pts[0].d)}</text><text class="axis" x="${W-32}" y="${H-4}" text-anchor="end">Hoy</text></svg>`;
+  const last = avgs[avgs.length-1], lastDay = day(pts[pts.length-1].d);
+  let ref = null; for (let i=pts.length-1;i>=0;i--) { if (lastDay - day(pts[i].d) >= 25) { ref = {i, gap:lastDay-day(pts[i].d)}; break; } }
+  const f1 = v => (Math.round(v*10)/10).toFixed(1).replace(".",",");
+  if (ref) { const diff = last - avgs[ref.i]; const wk = Math.round(ref.gap/7); $("#gTrend").textContent = `Media de 7 días: ${f1(last)} kg. ${Math.abs(diff)<0.05 ? "Estable" : (diff<0?"−":"+")+f1(Math.abs(diff))+" kg"} en ${wk} semanas.`; }
+  else $("#gTrend").textContent = `Media de 7 días: ${f1(last)} kg. La línea es la media; los puntos, cada pesada.`;
+}
+$("#gToday").addEventListener("click", () => { const t = today(); const on = !dayDoc(t).entreno; gy.pulse = t; replay($("#gToday"),"pulse"); saveDay(t, {entreno:on}); });
+$("#gCal").addEventListener("click", e => { const b = e.target.closest("[data-gday]"); if (!b || b.disabled) return; const d = b.dataset.gday; gy.pulse = d; saveDay(d, {entreno:!dayDoc(d).entreno}); });
+$("#gPrev").addEventListener("click", () => { gy.month = new Date(gy.month.getFullYear(), gy.month.getMonth()-1, 1); gy.animate = true; renderGym(); });
+$("#gNext").addEventListener("click", () => { gy.month = new Date(gy.month.getFullYear(), gy.month.getMonth()+1, 1); gy.animate = true; renderGym(); });
+$("#gWeight").addEventListener("submit", e => {
+  e.preventDefault();
+  const v = parseFloat(String($("#gW").value).replace(",","."));
+  if (!(v>=30 && v<=250)) { toast("Escribe un peso entre 30 y 250 kg"); return; }
+  $("#gW").blur(); gy.animate = true; saveDay(today(), {peso:Math.round(v*10)/10}); toast("Peso guardado");
+});
+$("#gChecks").addEventListener("click", e => {
+  const r = e.target.closest("[data-gcheck]"); if (!r) return;
+  const n = r.dataset.gcheck, t = today(), cur = [...(dayDoc(t).checks||[])];
+  const i = cur.indexOf(n); if (i>-1) cur.splice(i,1); else { cur.push(n); gy.ticked = n; }
+  saveDay(t, {checks:cur});
+});
+let goalSel = 5;
+$("#goal").innerHTML = Array.from({length:7},(_,i)=>`<button type="button" data-g="${i+1}">${i+1}</button>`).join("");
+$("#goal").addEventListener("click", e => { const b = e.target.closest("button"); if (b) { goalSel = +b.dataset.g; document.querySelectorAll("#goal button").forEach(x => x.setAttribute("aria-pressed", String(+x.dataset.g===goalSel))); } });
+$("#gSettings").addEventListener("click", () => {
+  goalSel = gy.cfg.objetivo; document.querySelectorAll("#goal button").forEach(x => x.setAttribute("aria-pressed", String(+x.dataset.g===goalSel)));
+  $("#gList").value = gy.cfg.lista.join("\n"); $("#dlgGym").showModal();
+});
+$("#gForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const lista = $("#gList").value.split("\n").map(s=>s.trim()).filter(Boolean).slice(0,20);
+  gy.cfg = { objetivo:goalSel, lista }; $("#dlgGym").close(); renderGym();
+  try { await GC.save(gy.cfg, "main"); } catch(err) { toast("No se ha podido guardar"); }
+});
+
+/* ================= Eventos comunes ================= */
+document.addEventListener("click", e => { if (e.target.closest("[data-close]")) e.target.closest("dialog").close(); });
+document.querySelectorAll("dialog").forEach(d => d.addEventListener("click", e => { if (e.target===d) d.close(); }));
+document.addEventListener("keydown", e => { if ((e.key==="Enter"||e.key===" ") && e.target.matches("[role=button]")) { e.preventDefault(); e.target.click(); } });
+document.addEventListener("visibilitychange", () => { if (!document.hidden) { renderAgenda(); renderCine(); renderGym(); } });
+setInterval(() => { if (ag.sel===today()) { const p = pager.querySelector(`[data-day="${today()}"]`); if (p) p.innerHTML = dayHTML(today()); } }, 60000);
+
+/* ================= Arranque ================= */
+const KEYS = { agenda:"agenda-items", cine:"app-cine", gym:"app-gym", gymcfg:"app-gymcfg" };
+$("#bkExport").addEventListener("click", async () => {
+  const data = { app:"Ahora", version:1, fecha:new Date().toISOString() };
+  for (const [k,v] of Object.entries(KEYS)) { try { data[k] = JSON.parse(localStorage.getItem(v)||"[]"); } catch(e) { data[k] = []; } }
+  const name = `ahora-copia-${today()}.json`;
+  const file = new File([JSON.stringify(data)], name, { type:"application/json" });
+  if (navigator.canShare && navigator.canShare({ files:[file] })) { try { await navigator.share({ files:[file], title:name }); return; } catch(e) { if (e.name==="AbortError") return; } }
+  const a = document.createElement("a"); a.href = URL.createObjectURL(file); a.download = name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 3000);
+});
+$("#bkImport").addEventListener("change", async e => {
+  const f = e.target.files[0]; e.target.value = ""; if (!f) return;
+  try {
+    const d = JSON.parse(await f.text()); if (d.app !== "Ahora") throw 0;
+    if (!confirm("Esto sustituye tus datos actuales por los de la copia. ¿Seguir?")) return;
+    for (const [k,v] of Object.entries(KEYS)) localStorage.setItem(v, JSON.stringify(d[k] || []));
+    location.reload();
+  } catch(err) { toast("Ese archivo no es una copia de Ahora"); }
+});
+function init(){
+  showTab(tab, true);
+  A = makeCol("", KEYS.agenda); C = makeCol("", KEYS.cine); G = makeCol("", KEYS.gym); GC = makeCol("", KEYS.gymcfg);
+  buildRange(ag.sel);
+  A.watch(list => { ag.items = list; ag.ready = true; renderAgenda(); });
+  C.watch(list => { cn.films = list; const first = !cn.ready; cn.ready = true; if (first) cn.animate = true; renderCine(); });
+  G.watch(list => { gy.days = Object.fromEntries(list.map(x => { const { id, ...v } = x; return [id, v]; })); const first = !gy.ready; gy.ready = true; if (first) gy.animate = true; renderGym(); });
+  GC.watch(list => { const c = list.find(x=>x.id==="main"); if (c) gy.cfg = { objetivo: c.objetivo || 5, lista: Array.isArray(c.lista) ? c.lista : DEF_LIST }; renderGym(); });
+  try { navigator.storage && navigator.storage.persist && navigator.storage.persist(); } catch(e) {}
+  if ("serviceWorker" in navigator && location.protocol !== "file:") navigator.serviceWorker.register("sw.js").catch(() => {});
+}
+init();
+})();
+</script>
+</body>
+</html>
