@@ -6,12 +6,12 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Ahora">
+<meta name="apple-mobile-web-app-title" content="nau">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <meta name="theme-color" content="#0D0F12" id="themeColor">
-<title>Ahora</title>
+<title>nau</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@200;300;400;500&display=swap" rel="stylesheet">
@@ -119,6 +119,24 @@ button{background:none;border:0;padding:0;cursor:pointer;-webkit-user-select:non
 .f-meta{color:var(--muted);font-size:14px}
 .f-nota{margin-top:auto;font-size:56px;font-weight:200;line-height:1;color:var(--accent);letter-spacing:-.04em}
 .f-nota small{font-size:15px;color:var(--muted);letter-spacing:0;margin-left:2px}
+.flist{padding:0 22px}
+.mhead{font-size:13px;color:var(--muted);margin:24px 0 2px}
+.mhead:first-child{margin-top:0}
+.film{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:14px;align-items:center;width:100%;padding:13px 0;border-bottom:1px solid var(--faint);text-align:left}
+.fd{display:flex;flex-direction:column;align-items:center;line-height:1}
+.fd b{font-size:22px;font-weight:300;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.fd small{font-size:11px;color:var(--muted);margin-top:4px}
+.fb{display:flex;flex-direction:column;min-width:0}
+.ft{font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fm{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.fn{font-size:22px;font-weight:300;color:var(--accent);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.fn.none{color:var(--faint)}
+.hero{display:flex;flex-direction:column;gap:6px;width:calc(100% - 44px);margin:0 22px 8px;padding-bottom:22px;text-align:left}
+.hero-row{display:flex;justify-content:space-between;align-items:flex-end;gap:16px}
+.hero .f-title{font-size:clamp(30px,8vw,42px)}
+.hero .f-nota{margin:0;font-size:60px}
+.hero img{width:56px;height:76px;border-radius:8px;object-fit:cover;flex:none}
+.prev-meta{color:var(--muted);font-size:13px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:22px 14px;padding:0 22px}
 .stub{display:flex;flex-direction:column;gap:8px;text-align:left}
 .s-row{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
@@ -182,6 +200,108 @@ button{background:none;border:0;padding:0;cursor:pointer;-webkit-user-select:non
 .goal button{aspect-ratio:1;border-radius:50%;border:1px solid var(--faint)}
 .goal button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 
+/* Hojas de añadir */
+.sheet2{padding-top:10px}
+.bigin{display:block;width:100%;border:0;background:none;outline:none;font-size:30px;font-weight:300;letter-spacing:-.02em;line-height:1.15;padding:4px 0 6px;color:var(--ink)}
+.bigin::placeholder{color:var(--muted);opacity:.65}
+.lab{font-size:13px;color:var(--muted);margin:20px 0 9px}
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 -22px;padding:0 22px 2px;scroll-behavior:smooth}
+.chips::-webkit-scrollbar{display:none}
+.chip{position:relative;flex:none;display:inline-flex;align-items:baseline;gap:5px;border-radius:999px;padding:9px 15px;background:var(--surface);color:var(--ink);font-size:15px;white-space:nowrap;cursor:pointer;transition:background .2s,color .2s}
+.chip small{font-size:13px;color:var(--muted);transition:color .2s}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--on-ink)}
+.chip[aria-pressed="true"] small{color:var(--on-ink);opacity:.7}
+.chip input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;-webkit-appearance:none;appearance:none}
+.seg3{position:relative;display:grid;grid-template-columns:repeat(3,1fr);background:var(--surface);border-radius:999px;padding:4px;margin:0 0 18px}
+.seg3 button{position:relative;z-index:1;padding:9px 0;color:var(--muted);font-size:15px;font-weight:500;transition:color .3s}
+.seg3 button[aria-pressed="true"]{color:var(--on-ink)}
+.seg-ind{position:absolute;top:4px;bottom:4px;left:4px;width:calc((100% - 8px)/3);background:var(--ink);border-radius:999px;transition:transform .38s cubic-bezier(.3,.9,.2,1)}
+.softarea{display:block;width:100%;border:0;background:var(--surface);border-radius:16px;padding:14px 16px;outline:none;resize:none;min-height:80px;font-size:16px;color:var(--ink);margin-top:20px}
+.softarea::placeholder{color:var(--muted)}
+.kind-nota .softarea{min-height:220px;margin-top:10px}
+.lineinput{display:block;width:100%;border:0;border-bottom:1px solid var(--faint);background:none;outline:none;padding:4px 0 10px;font-size:17px;color:var(--ink);border-radius:0}
+.lineinput::placeholder{color:var(--muted)}
+.lineinput:focus{border-bottom-color:var(--accent)}
+.sugg{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.sugg:empty{display:none}
+.sugg .chip{padding:6px 12px;font-size:14px}
+.twoc{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.score{display:flex;align-items:center;gap:14px}
+.scorebig{font-size:54px;font-weight:200;line-height:.9;min-width:62px;color:var(--accent);font-variant-numeric:tabular-nums;letter-spacing:-.04em}
+.scorebig.empty{color:var(--faint)}
+.scorebar{flex:1;display:grid;grid-template-columns:repeat(10,1fr);gap:5px;height:48px}
+.scorebar button{height:100%;display:flex;align-items:flex-end}
+.scorebar i{display:block;width:100%;border-radius:4px;background:var(--faint);transition:background .25s,transform .25s;transform-origin:bottom}
+.scorebar button.on i{background:var(--accent)}
+.photobtn{position:relative;display:inline-flex;align-items:center;gap:12px;margin-top:18px;color:var(--accent);font-size:15px;cursor:pointer}
+.photobtn input{position:absolute;inset:0;opacity:0;width:100%;cursor:pointer}
+.photobtn img{width:40px;height:54px;object-fit:cover;border-radius:6px}
+.photorm{color:var(--muted);font-size:14px;margin-left:14px}
+.bigsave{display:block;width:100%;margin-top:24px;padding:16px;border-radius:999px;background:var(--accent);color:var(--on-accent);font-weight:500;font-size:16px;transition:transform .15s,opacity .2s}
+.bigsave:disabled{opacity:.6}
+.bigsave:active{transform:scale(.98)}
+.foot{display:flex;justify-content:center;gap:30px;margin-top:10px}
+.foot button{color:var(--muted);font-size:15px;padding:8px}
+.foot .del.armed{color:var(--danger)}
+.wnow{display:flex;align-items:baseline;gap:8px;padding:0 22px}
+.wnow input{width:150px;border:0;border-bottom:1px solid transparent;background:none;font-size:64px;font-weight:200;letter-spacing:-.04em;padding:0;outline:none;font-variant-numeric:tabular-nums;color:var(--ink)}
+.wnow input:focus{border-bottom-color:var(--accent)}
+.wnow input::placeholder{color:var(--faint)}
+.wnow span{color:var(--muted);font-size:18px}
+.wnow button{margin-left:auto;color:var(--accent);font-size:15px;align-self:center}
+.wnow button[hidden]{display:none}
+
+.datewrap{display:flex;align-items:flex-end;gap:10px}
+.calbtn{width:36px;height:36px;border-radius:50%;background:var(--surface);color:var(--muted);display:flex;align-items:center;justify-content:center;margin-bottom:8px;flex:none;transition:color .2s,transform .15s}
+.calbtn svg{width:19px;height:19px}
+.calbtn:active{transform:scale(.92)}
+.mhead2{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.mhead2 h2{margin:0}
+.mhead2 button{color:var(--muted);font-size:26px;width:40px;height:40px;line-height:1}
+.mcal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px 0}
+.mcal small{text-align:center;font-size:12px;color:var(--muted);padding-bottom:6px}
+.mday{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0 4px;border-radius:14px}
+.mday b{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:400;font-size:15px;font-variant-numeric:tabular-nums;transition:background .2s,color .2s}
+.mday i{display:flex;gap:3px;height:4px}
+.mday i span{width:4px;height:4px;border-radius:50%;background:var(--muted)}
+.mday i span.dc{background:var(--accent)}
+.mday.past b{color:var(--muted)}
+.mday.tdy b{color:var(--accent);box-shadow:inset 0 0 0 1.5px var(--accent)}
+.mday.sel b{background:var(--ink);color:var(--on-ink);box-shadow:none}
+.mtoday{display:block;margin:14px auto 0;color:var(--accent);font-size:15px;padding:8px}
+.pday{display:flex;justify-content:space-between;align-items:baseline;margin:22px 0 2px}
+.pday:first-child{margin-top:0}
+.pday b{font-weight:500;font-size:15px}
+.pday span{font-size:13px;color:var(--muted)}
+
+.whenbox{margin-top:20px;background:var(--surface);border-radius:16px;overflow:hidden}
+.wrow2{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 12px 8px 16px;min-height:54px}
+.wrow2 + .wrow2{border-top:1px solid var(--faint)}
+.wrow2 span{font-size:16px}
+.wrow2 input{border:0;background:none;color:var(--ink);font-size:16px;text-align:right;min-height:38px;max-width:60%}
+.wrow2 input:focus{outline:none}
+
+.crow{display:flex;align-items:center;gap:14px;margin:0 22px 22px}
+.crow .search{margin:0;width:auto;flex:1;min-width:0}
+.vtog{position:relative;display:flex;background:var(--surface);border-radius:999px;padding:3px;flex:none}
+.vtog button{width:36px;height:30px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:background .25s,color .25s}
+.vtog button svg{width:18px;height:18px}
+.vtog button[aria-pressed="true"]{background:var(--ink);color:var(--on-ink)}
+.tgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px 10px;margin:6px 0 4px}
+.tile{display:flex;flex-direction:column;gap:6px;text-align:left;min-width:0}
+.tface{position:relative;aspect-ratio:3/4;border-radius:10px;overflow:hidden;background:var(--tone);color:#FFF4F1;display:flex;align-items:flex-end;padding:9px}
+.tface img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tt{position:relative;font-size:15px;font-weight:300;line-height:1.08;letter-spacing:-.01em;overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.tnota{position:absolute;top:7px;right:9px;font-size:16px;font-weight:300;color:var(--accent);font-variant-numeric:tabular-nums;text-shadow:0 1px 6px rgba(0,0,0,.35)}
+.tcap{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-height:1em}
+
+.tick{position:relative;width:40px;height:40px;border-radius:50%;border:1.5px solid var(--muted);margin-bottom:8px;flex:none;transition:background .3s,border-color .3s,transform .15s}
+.tick.on{background:var(--accent);border-color:var(--accent)}
+.tick::after{content:"";position:absolute;left:13.5px;top:8px;width:8px;height:15px;border:solid var(--on-accent);border-width:0 2.5px 2.5px 0;transform:rotate(45deg) scale(0);transition:transform .3s cubic-bezier(.3,1.4,.4,1)}
+.tick.on::after{transform:rotate(45deg) scale(1)}
+.tick:active{transform:scale(.9)}
+#sec-gym .calhead{margin-top:4px}
+
 /* Barra inferior */
 .bottom{position:fixed;left:0;right:0;bottom:0;padding:22px 14px calc(8px + env(safe-area-inset-bottom,0px));background:linear-gradient(to top,var(--bg) 62%,transparent);transition:background .5s}
 .bottom > *{max-width:532px;margin-left:auto;margin-right:auto}
@@ -198,7 +318,10 @@ button{background:none;border:0;padding:0;cursor:pointer;-webkit-user-select:non
 .tind{position:absolute;bottom:2px;left:0;width:calc(100%/3);display:flex;justify-content:center;transition:transform .45s cubic-bezier(.3,.9,.2,1);pointer-events:none}
 .tind::after{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent)}
 body:not([data-tab="agenda"]) .composer{display:none}
-body:not([data-tab="cine"]) #cineAdd{display:none}
+body:not([data-tab="cine"]) #cineAddRow{display:none}
+.plusrow{display:flex;justify-content:flex-end;padding-right:6px}
+.plusbig{width:56px;height:56px}
+.plusbig svg{width:24px;height:24px}
 .toast{position:fixed;left:50%;bottom:calc(150px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);max-width:calc(100% - 28px);width:max-content;background:var(--accent-soft);color:var(--ink);border-radius:20px;padding:9px 16px;font-size:14px;display:flex;gap:14px;align-items:center;z-index:5}
 .toast[hidden]{display:none}
 .toast button{color:var(--accent);font-weight:500}
@@ -271,10 +394,15 @@ dialog::backdrop{background:rgba(8,10,14,.4);-webkit-backdrop-filter:blur(3px);b
 <!-- ================= AGENDA ================= -->
 <section class="sec" id="sec-agenda">
   <header class="top">
-    <button class="date" id="aDateBtn" type="button" aria-label="Ir a hoy">
-      <span class="numbox"><span class="num" id="aNum">–</span></span>
-      <span class="dl"><b id="aWd"></b><span id="aMo"></span></span>
-    </button>
+    <div class="datewrap">
+      <button class="date" id="aDateBtn" type="button" aria-label="Ir a hoy">
+        <span class="numbox"><span class="num" id="aNum">–</span></span>
+        <span class="dl"><b id="aWd"></b><span id="aMo"></span></span>
+      </button>
+      <button class="calbtn" id="openMonth" type="button" aria-label="Ver el mes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><circle cx="8.5" cy="14.5" r=".9" fill="currentColor" stroke="none"/><circle cx="12" cy="14.5" r=".9" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r=".9" fill="currentColor" stroke="none"/></svg>
+      </button>
+    </div>
     <nav class="links">
       <button type="button" id="openPend">Pendientes <span class="c" id="nPend"></span></button>
       <button type="button" id="openNotes">Notas <span class="c" id="nNotes"></span></button>
@@ -293,30 +421,38 @@ dialog::backdrop{background:rgba(8,10,14,.4);-webkit-backdrop-filter:blur(3px);b
     </div>
     <nav class="links">
       <button type="button" id="cStats">Tu año</button>
-      <button type="button" id="cImport" hidden>Importar notas</button>
+      <button type="button" id="cImport">Importar notas</button>
     </nav>
   </header>
-  <input class="search" id="cQ" type="search" placeholder="Buscar película, cine o persona" aria-label="Buscar">
+  <div class="crow">
+    <input class="search" id="cQ" type="search" placeholder="Buscar" aria-label="Buscar película, cine o persona">
+    <div class="vtog" id="vtog" role="group" aria-label="Vista">
+      <button type="button" data-v="lista" aria-label="Lista"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 7h14M5 12h14M5 17h14"/></svg></button>
+      <button type="button" data-v="grid" aria-label="Cuadrícula"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="4.5" width="6" height="6" rx="1.5"/><rect x="13.5" y="4.5" width="6" height="6" rx="1.5"/><rect x="4.5" y="13.5" width="6" height="6" rx="1.5"/><rect x="13.5" y="13.5" width="6" height="6" rx="1.5"/></svg></button>
+    </div>
+  </div>
   <div id="cMain"></div>
 </section>
 
 <!-- ================= GYM ================= -->
 <section class="sec" id="sec-gym" hidden>
   <header class="top">
-    <div class="date">
-      <span class="numbox"><span class="num" id="gNum">0</span></span>
-      <span class="dl"><b id="gGoalTxt">de 5 días</b><span>esta semana</span></span>
+    <div class="datewrap">
+      <div class="date">
+        <span class="numbox"><span class="num" id="gNum">0</span></span>
+        <span class="dl"><b id="gGoalTxt">de 5 días</b><span>esta semana</span></span>
+      </div>
+      <button type="button" class="tick" id="gToday" aria-pressed="false" aria-label="Marcar que hoy he entrenado"></button>
     </div>
     <nav class="links"><button type="button" id="gSettings">Ajustes</button></nav>
   </header>
-  <button type="button" class="trained" id="gToday"><span class="ring"></span><span id="gTodayTxt">Hoy he entrenado</span></button>
   <div class="calhead"><button type="button" id="gPrev" aria-label="Mes anterior">‹</button><b id="gMonth"></b><button type="button" id="gNext" aria-label="Mes siguiente">›</button></div>
   <div class="cal" id="gCal"></div>
   <p class="gstats" id="gStats"></p>
   <h3 class="h">Peso</h3>
-  <form class="wrow" id="gWeight" autocomplete="off">
-    <input id="gW" type="number" step="0.1" min="30" max="250" inputmode="decimal" placeholder="—" aria-label="Peso de hoy en kilos"><span>kg hoy</span>
-    <button type="submit">Guardar</button>
+  <form class="wnow" id="gWeight" autocomplete="off">
+    <input id="gW" type="text" inputmode="decimal" placeholder="—" aria-label="Tu peso actual en kilos"><span>kg</span>
+    <button type="submit" id="gWSave" hidden>Guardar</button>
   </form>
   <p class="wnote" id="gTrend"></p>
   <div class="chart" id="gChart"></div>
@@ -328,12 +464,14 @@ dialog::backdrop{background:rgba(8,10,14,.4);-webkit-backdrop-filter:blur(3px);b
 
 <div class="bottom">
   <form class="composer" id="composer" autocomplete="off">
-    <input id="qtext" placeholder="Cena el viernes a las 21" aria-label="Añadir a la agenda" enterkeyhint="send">
-    <button class="send" id="send" type="submit" aria-label="Añadir">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    <input id="qtext" aria-label="Añadir al día seleccionado" enterkeyhint="done">
+    <button class="send" id="send" type="button" aria-label="Añadir con más detalles">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
     </button>
   </form>
-  <button type="button" class="cta" id="cineAdd">Apuntar película</button>
+  <div class="plusrow" id="cineAddRow"><button type="button" class="send plusbig" id="cineAdd" aria-label="Apuntar película">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+  </button></div>
   <nav class="tabbar" id="tabbar" aria-label="Apartados">
     <button type="button" data-tab="agenda" aria-pressed="true">Agenda</button>
     <button type="button" data-tab="cine" aria-pressed="false">Cine</button>
@@ -344,53 +482,51 @@ dialog::backdrop{background:rgba(8,10,14,.4);-webkit-backdrop-filter:blur(3px);b
 
 <!-- Hojas de agenda -->
 <dialog id="dlgEdit">
-  <form class="sheet" id="aForm" novalidate>
+  <form class="sheet sheet2" id="aForm" novalidate autocomplete="off">
     <div class="grab"></div>
-    <h2 id="aFTitle">Nuevo</h2>
-    <div class="kinds" id="kinds" role="group" aria-label="Tipo">
+    <div class="seg3" id="kinds" role="group" aria-label="Tipo">
+      <span class="seg-ind" id="segInd"></span>
       <button type="button" data-t="cita">Cita</button>
       <button type="button" data-t="tarea">Tarea</button>
       <button type="button" data-t="nota">Nota</button>
     </div>
-    <label class="f"><span>Qué</span><input name="titulo" autocomplete="off"></label>
-    <div class="two" id="when">
-      <label class="f"><span>Día</span><input name="fecha" type="date"></label>
-      <label class="f"><span>Hora</span><input name="hora" type="time"></label>
+    <input class="bigin" name="titulo" placeholder="¿Qué tienes?" aria-label="Qué">
+    <div id="when" class="whenbox">
+      <label class="wrow2"><span>Día</span><input type="date" id="aFechaIn" aria-label="Día"></label>
+      <label class="wrow2"><span>Hora</span><input type="time" id="aHoraIn" aria-label="Hora"></label>
     </div>
-    <label class="f"><span id="notaLabel">Nota</span><textarea name="nota"></textarea></label>
+    <textarea class="softarea" name="nota" placeholder="Añade una nota (opcional)" aria-label="Nota"></textarea>
     <p class="msg" id="aMsg" role="status"></p>
-    <div class="acts">
-      <button type="button" class="del" id="aDel" hidden>Borrar</button>
-      <button type="button" class="cancel" data-close>Cancelar</button>
-      <button type="submit" class="save" id="aSave">Guardar</button>
-    </div>
+    <button type="submit" class="bigsave" id="aSave">Añadir</button>
+    <div class="foot"><button type="button" class="del" id="aDel" hidden>Borrar</button><button type="button" data-close>Cancelar</button></div>
   </form>
 </dialog>
+<dialog id="dlgMonth"><div class="sheet"><div class="grab"></div>
+  <div class="mhead2"><button type="button" id="mPrev" aria-label="Mes anterior">‹</button><h2 id="mTitle"></h2><button type="button" id="mNext" aria-label="Mes siguiente">›</button></div>
+  <div class="mcal" id="mCal"></div>
+  <button type="button" class="mtoday" id="mToday">Ir a hoy</button>
+</div></dialog>
 <dialog id="dlgPend"><div class="sheet"><div class="grab"></div><h2>Pendientes</h2><div id="pendList"></div></div></dialog>
 <dialog id="dlgNotes"><div class="sheet"><div class="grab"></div><div class="shead"><h2>Notas</h2><button type="button" id="newNote">Nueva</button></div><div id="noteList"></div></div></dialog>
 
 <!-- Hojas de cine -->
 <dialog id="dlgFilm">
-  <form class="sheet" id="cForm" novalidate>
+  <form class="sheet sheet2" id="cForm" novalidate autocomplete="off">
     <div class="grab"></div>
-    <h2 id="cFTitle">Nueva película</h2>
-    <label class="f"><span>Película</span><input name="titulo" autocomplete="off"></label>
-    <div class="two">
-      <label class="f"><span>Fecha</span><input name="fecha" type="date"></label>
-      <label class="f"><span>Cine</span><input name="cine" list="cines" autocomplete="off"></label>
+    <input class="bigin" name="titulo" placeholder="¿Qué has visto?" aria-label="Película">
+    <p class="lab">Cuándo</p>
+    <div class="chips" id="cDays"></div>
+    <p class="lab">Tu nota</p>
+    <div class="score"><span class="scorebig empty" id="scoreBig">–</span><div class="scorebar" id="rate"></div></div>
+    <div class="twoc">
+      <div><p class="lab">Cine</p><input class="lineinput" name="cine" placeholder="Dónde"><div class="sugg" id="cineSugg"></div></div>
+      <div><p class="lab">Con quién</p><input class="lineinput" name="con" placeholder="Solo"><div class="sugg" id="conSugg"></div></div>
     </div>
-    <label class="f"><span>Con quién</span><input name="con" list="gente" autocomplete="off"></label>
-    <div class="f"><span>Nota</span><div class="rate" id="rate" style="margin-top:8px"></div></div>
-    <label class="f"><span>Qué te pareció</span><textarea name="comentario"></textarea></label>
-    <div class="f" id="photoField" hidden>
-      <span>Foto del cartel o la entrada</span>
-      <div class="photo-row"><img id="photoPrev" alt="" hidden><input type="file" accept="image/*" id="photoInput"><button type="button" id="photoRemove" class="cancel" hidden>Quitar</button></div>
-    </div>
+    <textarea class="softarea" name="comentario" placeholder="Qué te pareció (opcional)" aria-label="Comentario"></textarea>
+    <div><label class="photobtn"><img id="photoPrev" alt="" hidden><span id="photoTxt">Añadir foto</span><input type="file" accept="image/*" id="photoInput"></label><button type="button" class="photorm" id="photoRemove" hidden>Quitar</button></div>
     <p class="msg" id="cMsg" role="status"></p>
-    <div class="acts">
-      <button type="button" class="cancel" data-close style="margin-left:auto">Cancelar</button>
-      <button type="submit" class="save" id="cSave">Guardar</button>
-    </div>
+    <button type="submit" class="bigsave" id="cSave">Guardar película</button>
+    <div class="foot"><button type="button" data-close>Cancelar</button></div>
   </form>
 </dialog>
 <datalist id="cines"></datalist><datalist id="gente"></datalist>
@@ -400,7 +536,7 @@ dialog::backdrop{background:rgba(8,10,14,.4);-webkit-backdrop-filter:blur(3px);b
   <div class="sheet">
     <div class="grab"></div>
     <h2>Importar desde Notas</h2>
-    <p class="d-meta">Pega la nota del iPhone donde apuntas las pelis. Revisas antes de guardar.</p>
+    <p class="d-meta">Pega tu nota entera: una película por línea, con encabezados de mes o año. Se guarda el título y el año. Revisas antes de guardar.</p>
     <label class="f"><span>Tus notas</span><textarea id="importText" style="min-height:150px"></textarea></label>
     <ul class="preview" id="preview"></ul>
     <p class="msg" id="iMsg" role="status"></p>
@@ -507,6 +643,7 @@ const pager = $("#pager");
 const sortDay = (a,b) => (a.hora||"99:99").localeCompare(b.hora||"99:99") || (a.tipo==="cita"?0:1)-(b.tipo==="cita"?0:1) || (a.creado||0)-(b.creado||0);
 const onDay = d => ag.items.filter(x => (x.tipo==="cita"||x.tipo==="tarea") && x.fecha===d).sort(sortDay);
 const late = () => ag.items.filter(x => x.tipo==="tarea" && !x.hecho && x.fecha && x.fecha < today()).sort((a,b)=>a.fecha.localeCompare(b.fecha));
+const upcoming = () => { const t = today(); return ag.items.filter(x => (x.tipo==="cita"||x.tipo==="tarea") && x.fecha && x.fecha > t && !(x.tipo==="tarea" && x.hecho && ag.ticked!==x.id)).sort((a,b) => a.fecha.localeCompare(b.fecha) || sortDay(a,b)); };
 const undated = () => ag.items.filter(x => x.tipo==="tarea" && !x.fecha && (!x.hecho || ag.ticked===x.id || ag.fresh.has(x.id))).sort((a,b)=>(a.creado||0)-(b.creado||0));
 const notes = () => ag.items.filter(x => x.tipo==="nota"||x.tipo==="plan").sort((a,b)=>(b.editado||b.creado||0)-(a.editado||a.creado||0));
 
@@ -550,8 +687,9 @@ function renderAHeader(){
   const tm = iso(addDays(parseD(t),1)), ay = iso(addDays(parseD(t),-1));
   $("#aWd").textContent = ag.sel===t ? "Hoy" : ag.sel===tm ? "Mañana" : ag.sel===ay ? "Ayer" : cap(DIAS[d.getDay()]);
   $("#aMo").textContent = [t,tm,ay].includes(ag.sel) ? cap(DIAS[d.getDay()])+", "+MESES[d.getMonth()] : MESES[d.getMonth()] + (d.getFullYear()!==new Date().getFullYear() ? " "+d.getFullYear() : "");
-  $("#nPend").textContent = (late().length + undated().filter(x=>!x.hecho).length) || "";
+  $("#nPend").textContent = (late().length + upcoming().length + undated().filter(x=>!x.hecho).length) || "";
   $("#nNotes").textContent = notes().length || "";
+  if ($("#dlgMonth").open) renderMonth();
 }
 let stripWeek = null;
 function renderStrip(){
@@ -582,11 +720,38 @@ pager.addEventListener("scroll", () => {
 addEventListener("resize", () => { if (tab==="agenda") pager.scrollLeft = ag.range.indexOf(ag.sel) * pager.clientWidth; });
 $("#strip").addEventListener("click", e => { const b = e.target.closest("[data-day]"); if (b) goTo(b.dataset.day); });
 $("#aDateBtn").addEventListener("click", () => goTo(today()));
+let mView = null;
+function renderMonth(){
+  const y = mView.getFullYear(), mo = mView.getMonth(), t = today();
+  $("#mTitle").textContent = cap(MESES[mo]) + (y!==new Date().getFullYear() ? " " + y : "");
+  const first = (new Date(y,mo,1).getDay()+6)%7, n = new Date(y,mo+1,0).getDate();
+  let html = LETRAS.map(l => `<small>${l}</small>`).join("") + "<span></span>".repeat(first);
+  for (let d=1; d<=n; d++) {
+    const ds = iso(new Date(y,mo,d));
+    const its = onDay(ds).filter(x => !(x.tipo==="tarea" && x.hecho));
+    const dots = its.slice(0,3).map(x => `<span class="${x.tipo==="cita"?"dc":""}"></span>`).join("");
+    html += `<button type="button" class="mday${ds===t?" tdy":""}${ds===ag.sel?" sel":""}${ds<t?" past":""}" data-mday="${ds}" aria-label="${d} de ${MESES[mo]}${its.length?", "+its.length+(its.length===1?" cosa":" cosas"):""}"><b>${d}</b><i>${dots}</i></button>`;
+  }
+  $("#mCal").innerHTML = html;
+}
+$("#openMonth").addEventListener("click", () => { mView = new Date(parseD(ag.sel).getFullYear(), parseD(ag.sel).getMonth(), 1); renderMonth(); $("#dlgMonth").showModal(); });
+$("#mPrev").addEventListener("click", () => { mView = new Date(mView.getFullYear(), mView.getMonth()-1, 1); renderMonth(); });
+$("#mNext").addEventListener("click", () => { mView = new Date(mView.getFullYear(), mView.getMonth()+1, 1); renderMonth(); });
+$("#mCal").addEventListener("click", e => { const b = e.target.closest("[data-mday]"); if (b) { $("#dlgMonth").close(); goTo(b.dataset.mday); } });
+$("#mToday").addEventListener("click", () => { $("#dlgMonth").close(); goTo(today()); });
 
+function inDays(d){ const n = Math.round((parseD(d) - parseD(today()))/864e5); return n===1 ? "mañana" : n < 7 ? "en " + n + " días" : n < 14 ? "la semana que viene" : "en " + Math.round(n/7) + " semanas"; }
 function renderPend(){
-  const l = late(), u = undated();
-  $("#pendList").innerHTML = (l.length ? `<p class="sub">Atrasadas</p>${l.map(x=>itemHTML(x,{date:true})).join("")}` : "")
-    + (u.length ? `<p class="sub">Cuando puedas</p>${u.map(x=>itemHTML(x)).join("")}` : "") || `<p class="empty">Nada pendiente. Las tareas sin día aparecen aquí.</p>`;
+  const l = late(), up = upcoming(), u = undated();
+  let html = "";
+  if (l.length) html += `<div class="pday"><b>Se te pasaron</b><span>${l.length}</span></div>${l.map(x=>itemHTML(x,{date:true})).join("")}`;
+  let last = null;
+  up.forEach(x => {
+    if (x.fecha !== last) { const d = parseD(x.fecha); html += `<div class="pday"><b>${x.fecha===iso(addDays(parseD(today()),1)) ? "Mañana" : cap(DIAS[d.getDay()]) + " " + d.getDate() + " de " + MESES[d.getMonth()]}</b><span>${inDays(x.fecha)}</span></div>`; last = x.fecha; }
+    html += itemHTML(x);
+  });
+  if (u.length) html += `<div class="pday"><b>Sin día</b><span>cuando puedas</span></div>${u.map(x=>itemHTML(x)).join("")}`;
+  $("#pendList").innerHTML = html || `<p class="empty">Nada por delante. Lo que apuntes en días futuros aparecerá aquí.</p>`;
 }
 const ago = ts => { if (!ts) return ""; const d = new Date(ts), s = iso(d); return s===today() ? "Hoy, "+pad(d.getHours())+":"+pad(d.getMinutes()) : short(s); };
 function renderNotes(){
@@ -598,20 +763,38 @@ $("#openPend").addEventListener("click", () => { renderPend(); $("#dlgPend").sho
 $("#openNotes").addEventListener("click", () => { renderNotes(); $("#dlgNotes").showModal(); });
 $("#newNote").addEventListener("click", () => openAForm(null, {kind:"nota"}));
 
-const aForm = $("#aForm"); let aEditing = null, kind = "tarea", aDelArmed = false;
-function setKind(k){ kind = k; document.querySelectorAll("#kinds button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.t===k))); $("#when").hidden = k==="nota"; $("#notaLabel").textContent = k==="nota" ? "Texto" : "Nota"; aForm.classList.toggle("kind-nota", k==="nota"); }
+const aForm = $("#aForm"); let aEditing = null, kind = "tarea", aDelArmed = false, aFecha = "", aHora = "";
+const KINDS = ["cita","tarea","nota"];
+const PH = { cita:"¿Qué tienes?", tarea:"¿Qué tienes que hacer?", nota:"Título de la nota" };
+function setKind(k){
+  kind = k;
+  document.querySelectorAll("#kinds button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.t===k)));
+  $("#segInd").style.transform = `translateX(${KINDS.indexOf(k)*100}%)`;
+  $("#when").hidden = k==="nota";
+  aForm.titulo.placeholder = PH[k];
+  aForm.nota.placeholder = k==="nota" ? "Escribe aquí…" : "Añade una nota (opcional)";
+  aForm.classList.toggle("kind-nota", k==="nota");
+  if (k==="cita" && !aFecha) aFecha = ag.sel;
+  $("#aSave").textContent = aEditing ? "Guardar cambios" : { cita:"Añadir cita", tarea:"Añadir tarea", nota:"Guardar nota" }[k];
+  renderAChips();
+}
 $("#kinds").addEventListener("click", e => { const b = e.target.closest("button"); if (b) setKind(b.dataset.t); });
+function centerSel(box){ const s = box.querySelector('[aria-pressed="true"]'); if (s) box.scrollLeft = Math.max(0, s.offsetLeft - box.clientWidth/2 + s.offsetWidth/2); }
+function renderAChips(){ $("#aFechaIn").value = aFecha || ""; $("#aHoraIn").value = aHora || ""; }
+$("#aFechaIn").addEventListener("change", e => { aFecha = e.target.value || ""; });
+$("#aHoraIn").addEventListener("change", e => { aHora = e.target.value || ""; });
 function closeAll(){ document.querySelectorAll("dialog[open]").forEach(d => d.close()); }
 function openAForm(x, preset={}){
   closeAll();
   aEditing = x ? x.id : null; aForm.reset(); $("#aMsg").textContent = "";
-  $("#aFTitle").textContent = x ? "Editar" : "Nuevo";
-  setKind(preset.kind || (x?.tipo==="plan" ? "nota" : x?.tipo) || "tarea");
+  const k = preset.kind || (x?.tipo==="plan" ? "nota" : x?.tipo) || "tarea";
+  aFecha = x ? (x.fecha || "") : (k==="nota" ? "" : (preset.fecha ?? ag.sel));
+  aHora = x?.hora || preset.hora || "";
   aForm.titulo.value = preset.titulo ?? x?.titulo ?? "";
-  aForm.fecha.value = x?.fecha ?? ag.sel;
-  aForm.hora.value = x?.hora || ""; aForm.nota.value = x?.nota || "";
+  aForm.nota.value = x?.nota || preset.nota || "";
   const del = $("#aDel"); del.hidden = !x; del.textContent = "Borrar"; del.classList.remove("armed"); aDelArmed = false;
   $("#dlgEdit").showModal();
+  setKind(k);
   if (!x) setTimeout(() => aForm.titulo.focus(), 80);
 }
 $("#aDel").addEventListener("click", async () => {
@@ -622,9 +805,9 @@ aForm.addEventListener("submit", async e => {
   e.preventDefault();
   const titulo = aForm.titulo.value.trim();
   if (!titulo) { $("#aMsg").textContent = "Escribe qué es."; aForm.titulo.focus(); return; }
-  if (kind==="cita" && !aForm.fecha.value) { $("#aMsg").textContent = "Una cita necesita día."; return; }
+  if (kind==="cita" && !aFecha) { $("#aMsg").textContent = "Elige un día para la cita."; return; }
   const prev = aEditing ? ag.items.find(x=>x.id===aEditing) : null;
-  const data = { tipo:kind, titulo, fecha: kind==="nota" ? "" : aForm.fecha.value, hora: kind==="nota" ? "" : aForm.hora.value,
+  const data = { tipo:kind, titulo, fecha: kind==="nota" ? "" : aFecha, hora: kind==="nota" ? "" : aHora,
     nota: aForm.nota.value.trim(), hecho: kind==="tarea" ? !!prev?.hecho : false, hechoEn: prev?.hechoEn || null, creado: prev?.creado || Date.now(), editado: Date.now() };
   $("#aSave").disabled = true;
   try { const id = await A.save(data, aEditing); $("#dlgEdit").close(); land([id], [data]); }
@@ -684,17 +867,24 @@ function parseLocal(text){
   if (!fecha && (m = cut(/\s(?:el\s)?día\s(\d{1,2})\b|\sel\s(\d{1,2})(?=\s|$)(?!\s*[:.h]\d)/i))) {
     const n = +(m[1]||m[2]); let d = new Date(base.getFullYear(), base.getMonth(), n); if (d < base) d = new Date(base.getFullYear(), base.getMonth()+1, n); fecha = iso(d);
   }
-  if (hora && !fecha) fecha = hora > hm() ? today() : iso(addDays(base,1));
+  const explicito = !!fecha;
   let titulo = s.replace(/\s+/g," ").replace(/\s+(el|a|para|de|y|en)\s*$/i,"").replace(/^\s*(el|a|para)\s+/i,"").replace(/\s+,/g,",").replace(/[,\s]+$/,"").trim();
   if (!titulo) titulo = text.trim();
   titulo = cap(titulo);
-  const tipo = VERBOS.test(titulo) ? "tarea" : (hora || fecha) ? "cita" : "tarea";
-  return { tipo, titulo:titulo.slice(0,140), fecha, hora: tipo==="tarea" && !hora ? "" : hora, nota:"" };
+  const tipo = VERBOS.test(titulo) ? "tarea" : (hora || explicito) ? "cita" : "tarea";
+  return { tipo, titulo:titulo.slice(0,140), fecha: fecha || ag.sel, hora: tipo==="tarea" && !hora ? "" : hora, nota:"" };
 }
+$("#send").addEventListener("click", () => {
+  const text = $("#qtext").value.trim();
+  if (!text) { openAForm(null, {}); return; }
+  const it = parseLocal(text);
+  $("#qtext").value = "";
+  openAForm(null, { titulo:it.titulo, kind:it.tipo, fecha:it.fecha, hora:it.hora, nota:it.nota });
+});
 $("#composer").addEventListener("submit", async e => {
   e.preventDefault();
   const text = $("#qtext").value.trim();
-  if (!text) { openAForm(null, {}); return; }
+  if (!text) { $("#qtext").blur(); return; }
   const it = parseLocal(text);
   try {
     const id = await A.save({...it, hecho:false, hechoEn:null, creado:Date.now(), editado:Date.now()}, null);
@@ -719,17 +909,20 @@ async function onAgendaClick(e){
 [pager, $("#pendList"), $("#noteList")].forEach(el => el.addEventListener("click", onAgendaClick));
 
 /* ================= CINE ================= */
-const cn = { films:[], ready:false, year:new Date().getFullYear(), q:"", animate:true, fresh:null };
+const cn = { films:[], ready:false, year:new Date().getFullYear(), q:"", animate:true, fresh:null, view:"lista" };
+try { if (localStorage.getItem("cine-vista")==="grid") cn.view = "grid"; } catch(e) {}
 const TONES = ["#2B0709","#3A0B0E","#4A1013","#260A12","#3B1219","#1E0608"];
 const yearOf = f => f ? +f.slice(0,4) : null;
+const filmYear = f => f.fecha ? +f.fecha.slice(0,4) : (f.anio || null);
 const cFmt = f => { if (!f) return "Sin fecha"; const [y,m,d] = f.split("-"); return (+d)+" "+MES3[+m-1]; };
-const filmsOfYear = () => cn.films.filter(f => yearOf(f.fecha)===cn.year || (!f.fecha && cn.year===new Date().getFullYear()));
+const filmsOfYear = () => cn.films.filter(f => cn.year===0 ? !filmYear(f) : filmYear(f)===cn.year);
 const sortFilms = a => [...a].sort((x,y) => (y.fecha||"").localeCompare(x.fecha||"") || (y.creado||0)-(x.creado||0));
 let cLastCount = null;
 function renderCine(){
   const years = new Set([new Date().getFullYear(), cn.year]);
-  cn.films.forEach(f => { const y = yearOf(f.fecha); if (y) years.add(y); });
-  $("#cYear").innerHTML = [...years].sort((a,b)=>b-a).map(y => `<option value="${y}" ${y===cn.year?"selected":""}>en ${y}</option>`).join("");
+  cn.films.forEach(f => { const y = filmYear(f); if (y) years.add(y); });
+  if (cn.films.some(f => !filmYear(f))) years.add(0);
+  $("#cYear").innerHTML = [...years].sort((a,b)=>(b||-1)-(a||-1)).map(y => `<option value="${y}" ${y===cn.year?"selected":""}>${y ? "en " + y : "sin fecha"}</option>`).join("");
   const uniq = k => [...new Set(cn.films.map(f=>f[k]).filter(Boolean))];
   $("#cines").innerHTML = uniq("cine").map(c=>`<option value="${esc(c)}">`).join("");
   $("#gente").innerHTML = uniq("con").map(c=>`<option value="${esc(c)}">`).join("");
@@ -746,13 +939,48 @@ function renderCine(){
   if (!list.length) { main.innerHTML = `<div class="pad"><p class="nada">Ninguna todavía.</p><p>Apunta la próxima al salir de la sala${S.sample?", o importa las que tienes en Notas":""}.</p></div>`; return; }
   if (!shown.length) { main.innerHTML = `<div class="pad"><p class="empty">Nada coincide con esa búsqueda.</p></div>`; return; }
   let html = "", rest = shown;
-  if (!q) { html += featureHTML(shown[0], anim); rest = shown.slice(1); }
-  if (rest.length) html += `<div class="grid">${rest.map((f,i) => stubHTML(f,i,anim)).join("")}</div>`;
+  if (!q) { html += heroHTML(shown[0], anim); rest = shown.slice(1); }
+  if (rest.length) {
+    const groups = []; let last = null;
+    rest.forEach(f => {
+      const mk = f.fecha ? f.fecha.slice(0,7) : "sin";
+      if (q) { if (!groups.length) groups.push({ h:"", items:[] }); }
+      else if (mk !== last) { groups.push({ h: f.fecha ? cap(MESES[+f.fecha.slice(5,7)-1]) : f.anio ? "Vistas en " + f.anio : "Sin fecha", items:[] }); last = mk; }
+      groups[groups.length-1].items.push(f);
+    });
+    let n = 0;
+    html += `<div class="flist">` + groups.map(g => (g.h ? `<p class="mhead">${g.h}</p>` : "")
+      + (cn.view === "grid" ? `<div class="tgrid">${g.items.map(f => tileHTML(f, n++, anim)).join("")}</div>` : g.items.map(f => rowHTML(f, n++, anim)).join(""))).join("") + `</div>`;
+  }
   main.innerHTML = html;
   if (anim) main.querySelectorAll("[data-to]").forEach(el => countUp(el, +el.dataset.to));
 }
 const fotoSrc = f => f.foto || (f.fotoId ? blob(f.fotoId) : "");
 function face(f){ const src = fotoSrc(f); return src ? `<img src="${src}" alt="" loading="lazy">` : `<span class="poster-title">${esc(f.titulo)}</span>`; }
+function heroHTML(f, anim){
+  const src = fotoSrc(f);
+  const fd = f.fecha ? longD(f.fecha) : f.anio ? "en " + f.anio : "";
+  const meta = [cap(fd), f.cine, f.con ? "con " + f.con : ""].filter(Boolean).map(esc).join(", ");
+  return `<button type="button" class="hero${anim?" in":""}${cn.fresh===f.id?" fresh":""}" data-film="${esc(f.id)}">
+    <span class="f-kick">Lo último que viste</span>
+    <span class="hero-row"><span class="f-title">${esc(f.titulo)}</span>${f.nota?`<span class="f-nota"><span data-to="${f.nota}">${f.nota}</span><small>/10</small></span>`:(src?`<img src="${src}" alt="">`:"")}</span>
+    ${meta?`<span class="f-meta">${meta}</span>`:""}</button>`;
+}
+function tileHTML(f, i, anim){
+  const src = fotoSrc(f), d = f.fecha ? parseD(f.fecha) : null;
+  const cap2 = [src ? f.titulo : "", d ? d.getDate() + " " + MES3[d.getMonth()] : "", f.cine].filter(Boolean).map(esc).join(", ");
+  return `<button type="button" class="tile${anim?" in":""}${cn.fresh===f.id?" fresh":""}" data-film="${esc(f.id)}" style="--tone:${TONES[hash(f.titulo)%TONES.length]};--i:${Math.min(i+1,14)}" aria-label="${esc(f.titulo)}${f.nota?", "+f.nota+" sobre 10":""}">
+    <span class="tface">${src ? `<img src="${src}" alt="" loading="lazy">` : `<span class="tt">${esc(f.titulo)}</span>`}${f.nota ? `<span class="tnota">${f.nota}</span>` : ""}</span>
+    <span class="tcap">${cap2}</span></button>`;
+}
+function rowHTML(f, i, anim){
+  const d = f.fecha ? parseD(f.fecha) : null;
+  const meta = [f.cine, f.con ? "con " + f.con : ""].filter(Boolean).map(esc).join(", ");
+  return `<button type="button" class="film${anim?" in":""}${cn.fresh===f.id?" fresh":""}" data-film="${esc(f.id)}" style="--i:${Math.min(i+1,14)}">
+    <span class="fd"><b>${d ? d.getDate() : ""}</b><small>${d ? MES3[d.getMonth()] : ""}</small></span>
+    <span class="fb"><span class="ft">${esc(f.titulo)}</span>${meta?`<span class="fm">${meta}</span>`:""}</span>
+    <span class="fn">${f.nota || ""}</span></button>`;
+}
 function featureHTML(f, anim){
   const meta = [longD(f.fecha||today()), f.cine].filter(Boolean).map(esc).join(", ");
   return `<button type="button" class="feature${anim?" in":""}${cn.fresh===f.id?" fresh":""}" data-film="${esc(f.id)}" style="--tone:${TONES[hash(f.titulo)%TONES.length]}" aria-label="${esc(f.titulo)}">
@@ -781,7 +1009,7 @@ function openStats(){
   const per = Array(12).fill(0); list.forEach(f => { if (f.fecha) per[+f.fecha.slice(5,7)-1]++; });
   const max = Math.max(...per);
   const row = (k,v) => `<dt>${k}</dt><dd>${v}</dd>`;
-  $("#statsBox").innerHTML = `<div class="grab"></div><h2>Tu ${cn.year} en el cine</h2>
+  $("#statsBox").innerHTML = `<div class="grab"></div><h2>${cn.year ? "Tu " + cn.year + " en el cine" : "Películas sin fecha"}</h2>
     <p class="big"><span data-to="${list.length}" style="font-size:inherit;color:inherit;margin:0">${list.length}</span><span>${list.length===1?"película":"películas"}</span></p>
     <dl class="facts">${avg!==null?row("Nota media", `<span data-to="${avg.toFixed(1)}" data-dec="1">${avg.toFixed(1).replace(".",",")}</span>`):""}
     ${best?row("La mejor", `${esc(best.titulo)} (${best.nota})`):""}${cine?row("Cine habitual", `${esc(cine[0])} (${cine[1]})`):""}
@@ -793,23 +1021,51 @@ function openStats(){
 $("#cStats").addEventListener("click", openStats);
 $("#cYear").addEventListener("change", e => { cn.year = +e.target.value; cn.animate = true; renderCine(); });
 $("#cQ").addEventListener("input", e => { cn.q = e.target.value; renderCine(); });
+function syncVtog(){ document.querySelectorAll("#vtog button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v===cn.view))); }
+syncVtog();
+$("#vtog").addEventListener("click", e => { const b = e.target.closest("[data-v]"); if (!b || b.dataset.v===cn.view) return; cn.view = b.dataset.v; try { localStorage.setItem("cine-vista", cn.view); } catch(err) {} syncVtog(); cn.animate = true; renderCine(); });
 
-const cForm = $("#cForm"); let cEditing = null, nota = null, keepFoto = null;
-$("#rate").innerHTML = Array.from({length:10},(_,i)=>`<button type="button" data-n="${i+1}" aria-pressed="false">${i+1}</button>`).join("");
-function setNota(n){ nota = n; document.querySelectorAll("#rate button").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.n===n))); }
-$("#rate").addEventListener("click", e => { const b = e.target.closest("button"); if (b) { setNota(nota===+b.dataset.n ? null : +b.dataset.n); replay(b,"bump"); } });
-function showPhoto(src){ const im = $("#photoPrev"); im.hidden = !src; if (src) im.src = src; $("#photoRemove").hidden = !src; }
+const cForm = $("#cForm"); let cEditing = null, nota = null, keepFoto = null, cFecha = "", cAnio = null;
+$("#rate").innerHTML = Array.from({length:10},(_,i)=>`<button type="button" data-n="${i+1}" aria-label="Nota ${i+1}"><i style="height:${28+(i+1)*7.2}%"></i></button>`).join("");
+function setNota(n){
+  nota = n;
+  document.querySelectorAll("#rate button").forEach(b => { b.classList.toggle("on", n!==null && +b.dataset.n <= n); b.setAttribute("aria-pressed", String(+b.dataset.n===n)); });
+  const big = $("#scoreBig"); big.textContent = n ?? "–"; big.classList.toggle("empty", n===null);
+}
+$("#rate").addEventListener("click", e => { const b = e.target.closest("button"); if (b) { setNota(nota===+b.dataset.n ? null : +b.dataset.n); replay($("#scoreBig"),"bump"); } });
+function renderCDays(){
+  const t = today(), opts = [{ v:t, l:"Hoy" }, { v:iso(addDays(parseD(t),-1)), l:"Ayer" }];
+  for (let i=2;i<7;i++) { const d = iso(addDays(parseD(t),-i)); opts.push({ v:d, l:cap(DIAS3[parseD(d).getDay()]), s:String(parseD(d).getDate()) }); }
+  const custom = cFecha && !opts.some(o => o.v===cFecha);
+  let html = opts.map(o => `<button type="button" class="chip" data-fecha="${o.v}" aria-pressed="${o.v===cFecha}">${o.l}${o.s?`<small>${o.s}</small>`:""}</button>`).join("");
+  html += `<label class="chip" aria-pressed="${custom}">${custom ? cap(short(cFecha)) + " " + cFecha.slice(0,4) : "Otra fecha"}<input type="date" id="cDatePick" max="${t}" value="${custom?cFecha:""}" aria-label="Elegir otra fecha"></label>`;
+  if (cAnio && !cFecha) html = `<button type="button" class="chip" data-fecha="" aria-pressed="true">En ${cAnio}</button>` + html;
+  $("#cDays").innerHTML = html; centerSel($("#cDays"));
+}
+$("#cDays").addEventListener("click", e => { const b = e.target.closest("[data-fecha]"); if (b) { cFecha = b.dataset.fecha; renderCDays(); } });
+$("#cDays").addEventListener("change", e => { if (e.target.id==="cDatePick" && e.target.value) { cFecha = e.target.value; renderCDays(); } });
+function topValues(k){ const c = {}; cn.films.forEach(f => { if (f[k]) c[f[k]] = (c[f[k]]||0)+1; }); return Object.entries(c).sort((a,b)=>b[1]-a[1]).slice(0,4).map(x=>x[0]); }
+function renderSugg(){
+  [["cine","#cineSugg"],["con","#conSugg"]].forEach(([k,sel]) => {
+    const cur = cForm[k].value.trim();
+    $(sel).innerHTML = topValues(k).map(v => `<button type="button" class="chip" data-fill="${k}" data-v="${esc(v)}" aria-pressed="${v===cur}">${esc(v)}</button>`).join("");
+  });
+}
+cForm.addEventListener("click", e => { const b = e.target.closest("[data-fill]"); if (b) { const k = b.dataset.fill; cForm[k].value = cForm[k].value.trim()===b.dataset.v ? "" : b.dataset.v; renderSugg(); } });
+cForm.cine.addEventListener("input", renderSugg); cForm.con.addEventListener("input", renderSugg);
+function showPhoto(src){ const im = $("#photoPrev"); im.hidden = !src; if (src) im.src = src; $("#photoRemove").hidden = !src; $("#photoTxt").textContent = src ? "Cambiar foto" : "Añadir foto"; }
 $("#photoInput").addEventListener("change", e => { const f = e.target.files[0]; if (f) showPhoto(URL.createObjectURL(f)); });
 $("#photoRemove").addEventListener("click", () => { keepFoto = null; $("#photoInput").value = ""; showPhoto(null); });
 function openFilm(f){
   closeAll();
   cEditing = f ? f.id : null; keepFoto = f ? (fotoSrc(f) || null) : null;
-  cForm.reset(); $("#cMsg").textContent = ""; $("#cFTitle").textContent = f ? "Editar película" : "Nueva película";
-  cForm.titulo.value = f?.titulo || ""; cForm.fecha.value = f?.fecha || today();
-  cForm.cine.value = f?.cine || ""; cForm.con.value = f?.con || ""; cForm.comentario.value = f?.comentario || "";
+  cForm.reset(); $("#cMsg").textContent = "";
+  cFecha = f ? (f.fecha || "") : today(); cAnio = f?.anio || null;
+  cForm.titulo.value = f?.titulo || ""; cForm.cine.value = f?.cine || ""; cForm.con.value = f?.con || ""; cForm.comentario.value = f?.comentario || "";
+  $("#cSave").textContent = f ? "Guardar cambios" : "Guardar película";
   setNota(f?.nota || null); showPhoto(keepFoto);
-  $("#photoField").hidden = false;
-  $("#dlgFilm").showModal(); if (!f) setTimeout(() => cForm.titulo.focus(), 80);
+  $("#dlgFilm").showModal(); renderCDays(); renderSugg();
+  if (!f) setTimeout(() => cForm.titulo.focus(), 80);
 }
 async function toDataURL(file){
   const bmp = await createImageBitmap(file); const s = Math.min(1, 520/Math.max(bmp.width,bmp.height));
@@ -826,18 +1082,18 @@ cForm.addEventListener("submit", async e => {
     let foto = keepFoto; const file = $("#photoInput").files[0];
     if (file) { btn.textContent = "Preparando foto…"; try { foto = await toDataURL(file); } catch(e) { foto = keepFoto; } }
     const prev = cEditing ? cn.films.find(f=>f.id===cEditing) : null;
-    const data = { titulo, fecha:cForm.fecha.value||"", cine:cForm.cine.value.trim(), con:cForm.con.value.trim(), nota:nota||null,
+    const data = { titulo, fecha:cFecha, anio: cFecha ? null : (cAnio || null), cine:cForm.cine.value.trim(), con:cForm.con.value.trim(), nota:nota||null,
       comentario:cForm.comentario.value.trim(), foto:foto||null, creado:prev?.creado || Date.now() };
     const id = await C.save(data, cEditing);
-    const y = yearOf(data.fecha); if (y) cn.year = y;
+    const y = filmYear(data); cn.year = y || 0;
     cn.fresh = id; setTimeout(() => { cn.fresh = null; }, 1500);
     $("#dlgFilm").close(); cn.q = ""; $("#cQ").value = ""; renderCine();
   } catch(err) { $("#cMsg").textContent = err?.code==="quota_exceeded" ? "No queda espacio en el móvil para más fotos. Guarda sin foto o borra alguna." : "No se ha podido guardar. Inténtalo de nuevo."; }
-  finally { btn.disabled = false; btn.textContent = "Guardar"; }
+  finally { btn.disabled = false; btn.textContent = cEditing ? "Guardar cambios" : "Guardar película"; }
 });
 function openDetail(id){
   const f = cn.films.find(x=>x.id===id); if (!f) return;
-  const meta = [f.fecha ? longD(f.fecha) : "", f.cine, f.con].filter(Boolean).map(esc).join(", ");
+  const meta = [f.fecha ? longD(f.fecha) : f.anio ? "Vista en " + f.anio : "", f.cine, f.con ? "con " + f.con : ""].filter(Boolean).map(esc).join(", ");
   $("#detail").innerHTML = `<div class="grab"></div>${fotoSrc(f)?`<img class="detail-photo" src="${fotoSrc(f)}" alt="">`:""}
     <h2>${esc(f.titulo)}</h2><p class="d-meta">${meta}</p>
     ${f.nota?`<p class="f-nota" style="margin:0 0 14px">${f.nota}<small>/10</small></p>`:""}
@@ -855,37 +1111,96 @@ $("#cMain").addEventListener("click", e => { const b = e.target.closest("[data-f
 $("#cineAdd").addEventListener("click", () => openFilm(null));
 
 let parsed = [];
-function resetImport(){ parsed = []; $("#importText").value = ""; $("#preview").innerHTML = ""; $("#iMsg").textContent = ""; $("#convertBtn").hidden = false; $("#importBtn").hidden = true; }
+function resetImport(){ $("#iMsg").style.color = ""; parsed = []; $("#importText").value = ""; $("#preview").innerHTML = ""; $("#iMsg").textContent = ""; $("#convertBtn").hidden = false; $("#importBtn").hidden = true; }
 $("#cImport").addEventListener("click", () => { resetImport(); $("#dlgImport").showModal(); });
-$("#convertBtn").addEventListener("click", async () => {
+const MES_RX = "enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|setiembre|octubre|noviembre|diciembre|sept|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic";
+const mesIdx = s => ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"].indexOf(s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").slice(0,3).replace("set","sep"));
+const CINE_RX = /\b(cines?|kin[eé]polis|yelmo|cinesa|ocine|renoir|golem|verdi|ideal|callao|princesa|dreams|odeon|metropol|palafox|capitol|embajadores|conde duque|paz|cineteca|filmoteca|imax|isan|bahía|xanadú|3d)\b/i;
+const mesFuzzy = w => { const k = w.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").slice(0,3).replace("agu","ago").replace("set","sep"); return ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"].indexOf(k); };
+function parseFilms(txt){
+  const out = [], heads = []; let cy = null, head = null; const ny = new Date().getFullYear();
+  for (const raw of txt.split(/\r?\n/)) {
+    let l = raw.replace(/^\s*(?:[-–—•*·▪►>✓✔︎]|\d{1,3}[.)]|\[\s?[x ]?\s?\])\s*/i, "").trim();
+    if (!l || l.length < 2) continue;
+    let m;
+    if ((m = l.match(/^(?:año\s*)?((?:19|20)\d{2})\s*:?$/i))) { cy = +m[1]; continue; }
+    if ((m = l.match(/^\**\s*(?:[a-z]{2,12}\s+)?([a-záéíóúñ]{3,11})\.?(?:\s+(?:de\s+)?((?:19|20)\d{2}))?\s*:?$/i)) && mesFuzzy(m[1]) > -1 && (m[1].length <= 3 || mesFuzzy(m[1]) === mesFuzzy(m[1].slice(0,3)))
+        && (/^\**\s*[a-z]{2,12}\s+/i.test(l) ? /^\**\s*(un\w*|cine\w*|pel\w*|mes)\s/i.test(l) : true)) {
+      const mi = mesFuzzy(m[1]);
+      const full = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"][mi];
+      if (m[1].length > 3 && !full.startsWith(m[1].toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").slice(0,4).replace("agus","agos").replace("seti","sept")) && m[1].length > 4) { /* palabra parecida pero no es un mes */ }
+      else { head = { m: mi, y: m[2] ? +m[2] : cy }; if (m[2]) cy = +m[2]; heads.push(head); continue; }
+    }
+    if (/^(pel[ií]culas?|pelis|cine|vistas?)\b.{0,20}:?$/i.test(l)) { const y = l.match(/(?:19|20)\d{2}/); if (y) cy = +y[0]; continue; }
+    let fecha = "", nota = null, cine = "", con = ""; const notas = [];
+    if ((m = l.match(/(\d{1,2}(?:[.,]\d+)?)\s*\/\s*10\b/))) { nota = parseFloat(m[1].replace(",", ".")); l = l.replace(m[0], " "); }
+    else if ((m = l.match(/(\d(?:[.,]\d+)?)\s*\/\s*5\b/))) { nota = parseFloat(m[1].replace(",", ".")) * 2; l = l.replace(m[0], " "); }
+    else if ((m = l.match(/(★+)(☆*)/))) { nota = m[1].length / ((m[1].length + m[2].length) > 5 ? 10 : 5) * 10; l = l.replace(m[0], " "); }
+    else if ((m = l.match(/\bnota\s*:?\s*(\d{1,2}(?:[.,]\d+)?)/i))) { nota = parseFloat(m[1].replace(",", ".")); l = l.replace(m[0], " "); }
+    if ((m = l.match(/\b(\d{1,2})[\/.-](\d{1,2})(?:[\/.-](\d{2,4}))?\b/)) && +m[2] >= 1 && +m[2] <= 12 && +m[1] >= 1 && +m[1] <= 31) {
+      const y = m[3] ? (+m[3] < 100 ? 2000 + +m[3] : +m[3]) : (cy || ny); fecha = `${y}-${pad(+m[2])}-${pad(+m[1])}`; l = l.replace(m[0], " ");
+    } else if ((m = l.match(new RegExp(`\\b(\\d{1,2})\\s*(?:de\\s+)?(${MES_RX})\\.?(?:\\s+(?:de\\s+)?((?:19|20)\\d{2}))?\\b`, "i")))) {
+      const y = m[3] ? +m[3] : (cy || ny); fecha = `${y}-${pad(mesIdx(m[2]) + 1)}-${pad(+m[1])}`; l = l.replace(m[0], " ");
+    }
+    l = (" " + l + " ").replace(/\s+/g, " ").replace(/(\s[-–—|·])(\s+[-–—|·])+(?=\s)/g, "$1").replace(/\s[-–—|·]\s*$/, "").replace(/^\s*[-–—|·]\s/, "");
+    const big = l.split(/\s+[-–—|·]\s+|\s*;\s*|\s*[()\[\]]\s*/).map(s => s.trim()).filter(Boolean);
+    const isMeta = s => /^con\s/i.test(s) || /^(en\s|@)/i.test(s) || CINE_RX.test(s) || (/^\d{1,2}(?:[.,]\d+)?$/.test(s) && parseFloat(s.replace(",", ".")) <= 10);
+    // En el título, las comas solo separan si lo que sigue es un dato (nota, cine, con quién)
+    let segs = [];
+    if (big.length) {
+      const parts = big[0].split(/\s*,\s*/); let t = parts.shift();
+      while (parts.length && !isMeta(parts[0])) t += ", " + parts.shift();
+      segs = [t, ...parts, ...big.slice(1).flatMap(s => s.split(/\s*,\s*/))].filter(Boolean);
+    }
+    const NAME = "[A-ZÁÉÍÓÚÑ][\\wáéíóúñü]+(?:\\s+(?:y\\s+|e\\s+)?[A-ZÁÉÍÓÚÑ][\\wáéíóúñü]+){0,3}";
+    for (let i = 0; i < segs.length; i++) {
+      let x;
+      if (!con && (x = segs[i].match(new RegExp(`\\s+con\\s+(${NAME})\\s*$`)))) { con = x[1]; segs[i] = segs[i].slice(0, x.index).trim(); }
+      if (!cine && (x = segs[i].match(/\s+(?:en|@)\s+(?:el\s+|los\s+|la\s+)?(.+)$/i)) && CINE_RX.test(x[1])) { cine = x[1]; segs[i] = segs[i].slice(0, x.index).trim(); }
+      if (!con && i > 0 && (x = segs[i].match(/\s+con\s+(.+)$/i))) { con = x[1]; segs[i] = segs[i].slice(0, x.index).trim(); }
+    }
+    let titulo = segs.shift() || "";
+    for (const s of segs) {
+      let x;
+      if ((x = s.match(/^con\s+(.+)/i))) con = con || x[1];
+      else if ((x = s.match(/^(?:en\s+(?:el\s+|los\s+|la\s+)?|@\s*)(.+)/i)) || CINE_RX.test(s)) cine = cine || (x ? x[1] : s);
+      else if (nota === null && /^\d{1,2}(?:[.,]\d+)?$/.test(s) && parseFloat(s.replace(",", ".")) <= 10) nota = parseFloat(s.replace(",", "."));
+      else if (!/^\d+$/.test(s)) notas.push(s);
+    }
+    titulo = titulo.replace(/\s+/g, " ").replace(/[\s:.\-–—]+$/, "").trim();
+    if (!titulo || /^\d+$/.test(titulo)) continue;
+    out.push({ titulo: cap(titulo), fecha, head: fecha ? null : head, cine: cap(cine.trim()), con: con.trim(), nota: nota === null ? null : Math.max(1, Math.min(10, Math.round(nota))), comentario: notas.join(", ") });
+  }
+  // Años que faltan en los encabezados: se deducen del siguiente encabezado con año (la nota va en orden).
+  let next = null;
+  for (let i = heads.length - 1; i >= 0; i--) { const h = heads[i]; if (h.y == null && next) h.y = h.m <= next.m ? next.y : next.y - 1; if (h.y != null) next = h; }
+  let prev = null;
+  for (const h of heads) { if (h.y == null) h.y = prev ? (h.m >= prev.m ? prev.y : prev.y + 1) : ny; prev = h; }
+  return out.map(({ head, ...p }) => head ? { ...p, fecha: `${head.y}-${pad(head.m + 1)}-01`, aprox: true } : { ...p, aprox: false });
+}
+$("#convertBtn").addEventListener("click", () => {
   const txt = $("#importText").value.trim();
   if (!txt) { $("#iMsg").textContent = "Pega primero el texto de tu nota."; return; }
-  const btn = $("#convertBtn"); btn.disabled = true; btn.textContent = "Convirtiendo…"; $("#iMsg").textContent = "";
-  const y = new Date().getFullYear();
-  try {
-    const out = await S.sample.json(`Recibirás el texto de una nota del iPhone donde una persona apunta las películas que ha visto en el cine.
-Extrae cada película y responde SOLO con un array JSON de objetos con las claves "titulo" (string), "fecha" (YYYY-MM-DD o "" si no aparece; si solo hay día y mes usa el año ${y}), "cine" (string o ""), "con" (con quién fue, string o ""), "nota" (entero de 1 a 10 o null; si usa otra escala, conviértela), "comentario" (frase breve tal como la escribió, o ""). No inventes datos.
-
-Texto de la nota:
-${txt}`);
-    parsed = (Array.isArray(out)?out:[]).filter(o=>o && o.titulo).map(o => ({ titulo:String(o.titulo).trim(), fecha:/^\d{4}-\d{2}-\d{2}$/.test(o.fecha||"")?o.fecha:"",
-      cine:String(o.cine||"").trim(), con:String(o.con||"").trim(), nota:Number.isInteger(o.nota)&&o.nota>=1&&o.nota<=10?o.nota:null, comentario:String(o.comentario||"").trim() }));
-    if (!parsed.length) { $("#iMsg").textContent = "No he encontrado películas en ese texto."; return; }
-    $("#preview").innerHTML = parsed.map((p,i)=>`<li><label><input type="checkbox" checked data-i="${i}"><span>${esc(p.titulo)}</span><small>${p.fecha?cFmt(p.fecha)+" "+p.fecha.slice(0,4):"Sin fecha"}</small></label></li>`).join("");
-    btn.hidden = true; $("#importBtn").hidden = false; $("#importBtn").textContent = `Guardar ${parsed.length}`;
-  } catch(e) {
-    $("#iMsg").textContent = e?.code==="not_granted" ? "Hace falta permitir que la página consulte a Claude." : e?.code==="rate_limited" ? "Demasiadas peticiones seguidas. Espera un momento." : "No se ha podido convertir. Prueba con menos texto.";
-  } finally { btn.disabled = false; if (!btn.hidden) btn.textContent = "Convertir"; }
+  const have = new Set(cn.films.map(f => (f.titulo||"").toLowerCase() + "|" + (filmYear(f)||"")));
+  const all = parseFilms(txt).map(p => ({ titulo:p.titulo, anio: p.fecha ? +p.fecha.slice(0,4) : null, nota:p.nota }));
+  parsed = all.filter(p => !have.has(p.titulo.toLowerCase() + "|" + (p.anio||"")));
+  const dup = all.length - parsed.length;
+  $("#iMsg").style.color = "";
+  if (!parsed.length) { $("#iMsg").textContent = all.length ? "Esas películas ya estaban guardadas." : "No he encontrado películas en ese texto."; return; }
+  $("#preview").innerHTML = parsed.map((p,i) => `<li><label><input type="checkbox" checked data-i="${i}"><span style="min-width:0;flex:1">${esc(p.titulo)}</span><small>${p.anio || "Sin año"}</small></label></li>`).join("");
+  $("#iMsg").style.color = "var(--ink)";
+  $("#iMsg").textContent = `He encontrado ${parsed.length} películas${dup ? ` (${dup} ya estaban y las salto)` : ""}. Desmarca las líneas que no sean pelis.`;
+  $("#convertBtn").hidden = true; $("#importBtn").hidden = false; $("#importBtn").textContent = `Guardar ${parsed.length}`;
 });
 $("#preview").addEventListener("change", () => { const n = document.querySelectorAll("#preview input:checked").length; $("#importBtn").textContent = `Guardar ${n}`; $("#importBtn").disabled = !n; });
 $("#importBtn").addEventListener("click", async () => {
   const btn = $("#importBtn"); btn.disabled = true;
   const chosen = [...document.querySelectorAll("#preview input:checked")].map(i => parsed[+i.dataset.i]);
   let ok = 0;
-  for (const p of chosen) { try { await C.save({...p, fotoId:null, creado:Date.now()+ok}, null); ok++; btn.textContent = `Guardando ${ok}/${chosen.length}`; } catch(e) { break; } }
-  $("#iMsg").textContent = ok===chosen.length ? `Guardadas ${ok} películas.` : `Guardadas ${ok} de ${chosen.length}. Vuelve a intentarlo con el resto.`;
+  for (const p of chosen) { try { await C.save({ titulo:p.titulo, fecha:"", anio:p.anio, nota:p.nota || null, cine:"", con:"", comentario:"", foto:null, creado:Date.now()+ok }, null); ok++; btn.textContent = `Guardando ${ok}/${chosen.length}`; } catch(e) { break; } }
+  $("#iMsg").style.color = "var(--ink)"; $("#iMsg").textContent = ok===chosen.length ? `Guardadas ${ok} películas.` : `Guardadas ${ok} de ${chosen.length}. Vuelve a intentarlo con el resto.`;
   btn.disabled = false;
-  if (ok===chosen.length) setTimeout(() => { $("#dlgImport").close(); cn.animate = true; renderCine(); }, 900);
+  if (ok===chosen.length) setTimeout(() => { $("#dlgImport").close(); const ys = chosen.map(p=>p.anio).filter(Boolean); cn.year = ys.length ? Math.max(...ys) : 0; cn.animate = true; renderCine(); }, 900);
 });
 
 /* ================= GYM ================= */
@@ -913,7 +1228,8 @@ function renderGym(){
   $("#gGoalTxt").textContent = `de ${gy.cfg.objetivo} días`;
   const on = !!dayDoc(t).entreno;
   $("#gToday").classList.toggle("on", on);
-  $("#gTodayTxt").textContent = on ? "Entrenado hoy" : "Hoy he entrenado";
+  $("#gToday").setAttribute("aria-pressed", String(on));
+  $("#gToday").setAttribute("aria-label", on ? "Hoy has entrenado. Toca para desmarcar" : "Marcar que hoy he entrenado");
   if (tab !== "gym") return;
   const anim = gy.animate && !REDUCE && gy.ready; gy.animate = false;
   // calendario
@@ -931,7 +1247,7 @@ function renderGym(){
   const st = weekStreak();
   $("#gStats").innerHTML = `<b>${monthCount}</b> ${monthCount===1?"día":"días"} en ${MESES[mo]}. ` + (st ? `<b>${st}</b> ${st===1?"semana":"semanas seguidas"} cumpliendo tu objetivo.` : `Cumple ${gy.cfg.objetivo} días esta semana para empezar racha.`);
   // peso
-  const w = dayDoc(t).peso; if (document.activeElement !== $("#gW")) $("#gW").value = w ?? "";
+  const lw = latestWeight(); if (document.activeElement !== $("#gW")) { $("#gW").value = lw ? String(lw.w).replace(".", ",") : ""; $("#gWSave").hidden = true; }
   renderChart(anim);
   // checklist
   const done = dayDoc(t).checks || [];
@@ -939,10 +1255,12 @@ function renderGym(){
     : `<p class="empty">Añade en Ajustes lo que quieras marcar cada día.</p>`;
   gy.ticked = null;
 }
+function latestWeight(){ const e = Object.entries(gy.days).filter(([d,v]) => v.peso).sort((a,b)=>b[0].localeCompare(a[0]))[0]; return e ? { d:e[0], w:+e[1].peso } : null; }
 function renderChart(anim){
   const t = today(), from = iso(addDays(parseD(t), -89));
   const pts = Object.entries(gy.days).filter(([d,v]) => v.peso && d>=from && d<=t).map(([d,v]) => ({d, w:+v.peso})).sort((a,b)=>a.d.localeCompare(b.d));
-  if (pts.length < 2) { $("#gChart").innerHTML = ""; $("#gTrend").textContent = pts.length ? "Apunta tu peso unos días más para ver la tendencia." : "Pésate cuando quieras; con unos días verás la tendencia, no el dato suelto."; return; }
+  const lw = latestWeight();
+  if (pts.length < 3) { $("#gChart").innerHTML = ""; $("#gTrend").textContent = lw ? (lw.d===t ? "Actualizado hoy. Cámbialo cuando vuelvas a pesarte." : "Actualizado el " + short(lw.d) + ". Cámbialo cuando vuelvas a pesarte.") : "Escribe tu peso. Se queda guardado hasta que lo cambies."; return; }
   const day = s => Math.round((parseD(s) - parseD(pts[0].d))/864e5);
   const span = Math.max(7, day(t));
   const avgAt = i => { const di = day(pts[i].d); const win = pts.filter(p => day(p.d) <= di && day(p.d) > di-7); return win.reduce((s,p)=>s+p.w,0)/win.length; };
@@ -965,11 +1283,13 @@ $("#gToday").addEventListener("click", () => { const t = today(); const on = !da
 $("#gCal").addEventListener("click", e => { const b = e.target.closest("[data-gday]"); if (!b || b.disabled) return; const d = b.dataset.gday; gy.pulse = d; saveDay(d, {entreno:!dayDoc(d).entreno}); });
 $("#gPrev").addEventListener("click", () => { gy.month = new Date(gy.month.getFullYear(), gy.month.getMonth()-1, 1); gy.animate = true; renderGym(); });
 $("#gNext").addEventListener("click", () => { gy.month = new Date(gy.month.getFullYear(), gy.month.getMonth()+1, 1); gy.animate = true; renderGym(); });
+$("#gW").addEventListener("input", () => { const lw = latestWeight(); $("#gWSave").hidden = String($("#gW").value).replace(",",".") == (lw ? String(lw.w) : ""); });
+$("#gW").addEventListener("blur", () => setTimeout(() => { if (document.activeElement !== $("#gWSave") && $("#gWSave").hidden) renderGym(); }, 150));
 $("#gWeight").addEventListener("submit", e => {
   e.preventDefault();
   const v = parseFloat(String($("#gW").value).replace(",","."));
   if (!(v>=30 && v<=250)) { toast("Escribe un peso entre 30 y 250 kg"); return; }
-  $("#gW").blur(); gy.animate = true; saveDay(today(), {peso:Math.round(v*10)/10}); toast("Peso guardado");
+  $("#gW").blur(); $("#gWSave").hidden = true; gy.animate = true; saveDay(today(), {peso:Math.round(v*10)/10}); toast("Peso actualizado");
 });
 $("#gChecks").addEventListener("click", e => {
   const r = e.target.closest("[data-gcheck]"); if (!r) return;
@@ -1001,9 +1321,9 @@ setInterval(() => { if (ag.sel===today()) { const p = pager.querySelector(`[data
 /* ================= Arranque ================= */
 const KEYS = { agenda:"agenda-items", cine:"app-cine", gym:"app-gym", gymcfg:"app-gymcfg" };
 $("#bkExport").addEventListener("click", async () => {
-  const data = { app:"Ahora", version:1, fecha:new Date().toISOString() };
+  const data = { app:"nau", version:1, fecha:new Date().toISOString() };
   for (const [k,v] of Object.entries(KEYS)) { try { data[k] = JSON.parse(localStorage.getItem(v)||"[]"); } catch(e) { data[k] = []; } }
-  const name = `ahora-copia-${today()}.json`;
+  const name = `nau-copia-${today()}.json`;
   const file = new File([JSON.stringify(data)], name, { type:"application/json" });
   if (navigator.canShare && navigator.canShare({ files:[file] })) { try { await navigator.share({ files:[file], title:name }); return; } catch(e) { if (e.name==="AbortError") return; } }
   const a = document.createElement("a"); a.href = URL.createObjectURL(file); a.download = name; document.body.appendChild(a); a.click(); a.remove();
@@ -1012,11 +1332,11 @@ $("#bkExport").addEventListener("click", async () => {
 $("#bkImport").addEventListener("change", async e => {
   const f = e.target.files[0]; e.target.value = ""; if (!f) return;
   try {
-    const d = JSON.parse(await f.text()); if (d.app !== "Ahora") throw 0;
+    const d = JSON.parse(await f.text()); if (!["nau","serC","Ahora"].includes(d.app)) throw 0;
     if (!confirm("Esto sustituye tus datos actuales por los de la copia. ¿Seguir?")) return;
     for (const [k,v] of Object.entries(KEYS)) localStorage.setItem(v, JSON.stringify(d[k] || []));
     location.reload();
-  } catch(err) { toast("Ese archivo no es una copia de Ahora"); }
+  } catch(err) { toast("Ese archivo no es una copia de nau"); }
 });
 function init(){
   showTab(tab, true);

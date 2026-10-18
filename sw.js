@@ -1,6 +1,6 @@
-// Ahora: funciona sin conexión. Sube VERSION cuando cambies index.html.
-const VERSION = "ahora-v1";
-const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icons/apple-touch-icon.png", "./icons/icon-192.png", "./icons/icon-512.png"];
+// nau: funciona sin conexión. Sube VERSION cuando cambies index.html.
+const VERSION = "nau-v6";
+const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./apple-touch-icon.png", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(VERSION).then(c => c.addAll(SHELL)));
