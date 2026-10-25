@@ -1,5 +1,5 @@
 // nau: funciona sin conexión. Sube VERSION cuando cambies index.html.
-const VERSION = "nau-v6";
+const VERSION = "nau-v14";
 const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./apple-touch-icon.png", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", e => {
